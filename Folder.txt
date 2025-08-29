@@ -1,0 +1,7 @@
+frontend/
+├── index.html          # Main game interface
+├── style.css           # Responsive styling with Onam theme
+├── app.js              # Game engine and logic
+└── assets/
+    ├── sprites/        # Character and obstacle sprites
+    ├─
