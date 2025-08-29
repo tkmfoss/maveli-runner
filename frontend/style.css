@@ -1,3 +1,7 @@
+@font-face {
+    font-family: Minecraft;
+    src: url('./assets/Minecraft.ttf');
+}
 .game-container {
     width: 1200px;
     height: 450px;
@@ -5,21 +9,45 @@
     border: 2px solid;
     position: relative;
     overflow: hidden;
+    background-image: url('./assets/background1.png');
+    background-size: contain;
+    /* animation: bg-move 30s linear infinite; */
 
 }
+
+/* Not Working */
+/* @keyframes bg-move {
+    0%
+    {
+        background-position: 100%;
+    }
+    100%
+    {
+        background-position: -50%;
+    }
+    
+} */
+
 .player
 {
-    width: 80px;
-    height: 100px;
+    width: 90px;
+    height: 105px;
     border: 1px solid blue;
     position: absolute;
-    bottom: 0;
-    left: 10%;
+    bottom: -10px;
+    left: 15%;
+    background-image: url('./assets/runningmaveli.gif');
+    background-size: cover;
+    background-position: center ;
 }
+
 .player.jump
 {
-    animation: jump 0.8s infinite;
+    animation: jump 1.2s infinite;
+    background-image: url('./assets/normalmaveli.png');
+    background-size: cover;
 }
+
 @keyframes jump{
     0%
     {
@@ -27,14 +55,13 @@
     }
     25%
     {
-        bottom: 200px;
+        bottom: 180px;
 
     }
     50%
     {
-        bottom: 200px;
+        bottom: 180px;
     }
-
     100%
     {
         bottom: 0;
@@ -42,28 +69,51 @@
     }
     
 }
+
 .obstacle
 {
     width: 50px;
-    height: 75px;
+    height: 70px;
     border: 1px solid red;
     position: absolute;
-    bottom: 0;
+    bottom: -11px;
     left: 99%;
-    animation: move 3s linear infinite;
+    animation: move 8s linear infinite;
+    background-image: url('./assets/obstacle3.webp');
+    background-size: cover;
+    background-position: center;
+    clip-path: polygon(20% 0%, 80% 20%, 100% 100%, 0% 100%);
+    transition: all 0.1s ease;
+
 }
+
+.obstacle-s {width: 60px; height: 80px;}
+.obstacle-m {width: 70px; height: 90px;}
+.obstacle-m {width: 80px; height: 100px;}
 
 @keyframes move 
 {
     0%
     {
-        left:100 %;
+        left: 100%;
     }
     100%
     {
         left: -100px;
     }
 }
+
+.score-card {
+    font-family: Minecraft;
+    font-size: 30px;
+    margin: 20px;
+
+}
+
+.score-card span {
+    margin-right: 20px;
+}
+
 .obstacle2
 {
     width: 90px;
