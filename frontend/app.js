@@ -1,7 +1,10 @@
-const player = document.querySelector('.player');
-const obstacle = document.querySelector('.obstacle');
+const playerElement = document.querySelector('.player');
+const obstacleElement = document.querySelector('.obstacle');
 const scoreElement = document.querySelector('.score-card .score')
 const highscoreElement = document.querySelector('.score-card .high-score')
+const restartGameElement = document.querySelector('.restart-game');
+const gamecontainerElement = document.querySelector('.game-container');
+
 const OBSTACLE_SIZE = ['s','m','l'];
 let jumping=false;
 function jumpListener()
@@ -19,28 +22,29 @@ function jump(){
         return;
     }
     jumping = true;
-    player.classList.add('jump');
+    playerElement.classList.add('jump');
     setTimeout(() =>
     {
-        player.classList.remove('jump');
+        playerElement.classList.remove('jump');
         jumping = false;
     },1200)
 }
 
+let collisonInterval;
 function collisionDetection()
 {
-    setInterval(() => {
+    collisonInterval = setInterval(() => {
         if(isCollision())
         {
             checkHighScore();
             score = 0;
-            alert('You Dead Boy');          
+            stopGame();
         }
-    })
+    },20)
 }
 function isCollision() {
-    const playerRect = player.getBoundingClientRect();
-    const obstacleRect = obstacle.getBoundingClientRect();
+    const playerRect = playerElement.getBoundingClientRect();
+    const obstacleRect = obstacleElement.getBoundingClientRect();
     
     const polygonPoints = [
         {
@@ -84,14 +88,14 @@ function isPointInPolygon(point, polygon) {
 }
 
 let score = 0;
-
 function setScore(newScore)
 {
     scoreElement.innerHTML = score = newScore;
 }
 
+let scoreInterval;
 function countScore(){
-    setInterval(() =>
+    scoreInterval = setInterval(() =>
     {
         setScore(score+1);
     },50);
@@ -119,13 +123,36 @@ function randomObstacleSize()
     return OBSTACLE_SIZE[index];
 }
 
+let changeObstacleInteral;
 function randomObstacle()
 {
-    setInterval(() =>
+    changeObstacleInteral = setInterval(() =>
     {
         const obstacleSize = randomObstacleSize();
-        obstacle.className = `obstacle obstacle-${obstacleSize}`;
+        obstacleElement.className = `obstacle obstacle-${obstacleSize}`;
     },4000)
+}
+
+
+function stopGame()
+{
+    clearInterval(collisonInterval);
+    clearInterval(scoreInterval);
+    clearInterval(changeObstacleInteral);
+    restartGameElement.classList.add('show')
+    gamecontainerElement.classList.add('stop');
+    obstacleElement.classList.add('stop'); 
+    playerElement.classList.add('stop');
+
+}
+
+function restartgame()
+{
+    location.reload();
+}
+
+function mainmenu() {
+    window.location.href = "leaderboard.html";
 }
 
 function main() {

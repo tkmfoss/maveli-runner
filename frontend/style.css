@@ -78,7 +78,7 @@
     position: absolute;
     bottom: -11px;
     left: 99%;
-    animation: move 8s linear infinite;
+    animation: move 4s linear infinite;
     background-image: url('./assets/obstacle3.webp');
     background-size: cover;
     background-position: center;
@@ -89,7 +89,7 @@
 
 .obstacle-s {width: 60px; height: 80px;}
 .obstacle-m {width: 70px; height: 90px;}
-.obstacle-m {width: 80px; height: 100px;}
+.obstacle-l {width: 80px; height: 100px;}
 
 @keyframes move 
 {
@@ -122,4 +122,55 @@
     position: absolute;
     bottom: 0;
     left: 99%;
+}
+
+.restart-game {
+    visibility: hidden;
+    font-family: Minecraft;
+    background-color: #ffffffb8;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    z-index: 2;
+}
+
+.restart-game.show
+{
+    visibility: visible;
+}
+
+.restart-game .content {
+    display: flex;
+}
+
+.restart-game .btn-reset-game {
+    border: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('./assets/background2.webp');
+    background-size: contain;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.restart-game .text {
+    align-self: end ;
+}
+
+.game-container.stop,
+.obstacle.stop {
+    animation-play-state: paused;
+}
+
+.player.stop {
+    background-image: url('./assets/normalmaveli.png');
+    background-size: cover;
 }
