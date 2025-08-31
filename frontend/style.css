@@ -2,78 +2,57 @@
     font-family: Minecraft;
     src: url('./assets/Minecraft.ttf');
 }
+
+/* Base styles for mobile-first approach */
 .game-container {
-    width: 1200px;
-    height: 450px;
-    margin: 20px auto;
-    border: 2px solid;
+    width: 100%;
+    height: 300px;
+    margin: 0;
+    border: 1px solid;
     position: relative;
     overflow: hidden;
     background-image: url('./assets/background1.png');
-    background-size: contain;
-    /* animation: bg-move 30s linear infinite; */
-
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
 }
 
-/* Not Working */
-/* @keyframes bg-move {
-    0%
-    {
-        background-position: 100%;
-    }
-    100%
-    {
-        background-position: -50%;
-    }
-    
-} */
-
-.player
-{
-    width: 90px;
-    height: 105px;
+.player {
+    width: 60px;
+    height: 70px;
     border: 1px solid blue;
     position: absolute;
     bottom: -10px;
     left: 15%;
     background-image: url('./assets/runningmaveli.gif');
     background-size: cover;
-    background-position: center ;
+    background-position: center;
 }
 
-.player.jump
-{
+.player.jump {
     animation: jump 1.2s infinite;
     background-image: url('./assets/normalmaveli.png');
     background-size: cover;
 }
 
-@keyframes jump{
-    0%
-    {
+@keyframes jump {
+    0% {
         bottom: 0;
     }
-    25%
-    {
-        bottom: 180px;
-
+    25% {
+        bottom: 120px;
     }
-    50%
-    {
-        bottom: 180px;
+    50% {
+        bottom: 120px;
     }
-    100%
-    {
+    100% {
         bottom: 0;
-
     }
-    
 }
 
-.obstacle
-{
-    width: 50px;
-    height: 70px;
+.obstacle {
+    width: 35px;
+    height: 50px;
     border: 1px solid red;
     position: absolute;
     bottom: -11px;
@@ -84,40 +63,37 @@
     background-position: center;
     clip-path: polygon(20% 0%, 80% 20%, 100% 100%, 0% 100%);
     transition: all 0.1s ease;
-
 }
 
-.obstacle-s {width: 60px; height: 80px;}
-.obstacle-m {width: 70px; height: 90px;}
-.obstacle-l {width: 80px; height: 100px;}
+.obstacle-s { width: 40px; height: 55px; }
+.obstacle-m { width: 50px; height: 65px; }
+.obstacle-l { width: 60px; height: 75px; }
 
-@keyframes move 
-{
-    0%
-    {
+@keyframes move {
+    0% {
         left: 100%;
     }
-    100%
-    {
+    100% {
         left: -100px;
     }
 }
 
 .score-card {
     font-family: Minecraft;
-    font-size: 30px;
-    margin: 20px;
-
+    font-size: 18px;
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .score-card span {
-    margin-right: 20px;
+    margin-right: 15px;
 }
 
-.obstacle2
-{
-    width: 90px;
-    height: 75px;
+.obstacle2 {
+    width: 60px;
+    height: 50px;
     border: 1px solid red;
     position: absolute;
     bottom: 0;
@@ -132,37 +108,42 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100px;
-    height: 150px;
+    width: 80px;
+    height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 30px;
+    font-size: 20px;
     z-index: 2;
+    padding: 15px;
+    border-radius: 8px;
 }
 
-.restart-game.show
-{
+.restart-game.show {
     visibility: visible;
 }
 
 .restart-game .content {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .restart-game .btn-reset-game {
     border: none;
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     background-image: url('./assets/background2.webp');
     background-size: contain;
-    margin-left: 15px;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .restart-game .text {
-    align-self: end ;
+    text-align: center;
+    font-size: 16px;
 }
 
 .game-container.stop,
@@ -173,4 +154,578 @@
 .player.stop {
     background-image: url('./assets/normalmaveli.png');
     background-size: cover;
+}
+
+/* Index page styles */
+.index-body {
+    background-color: black;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-family: sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.foss {
+    width: 150px;
+    height: 150px;
+    background-image: url('./assets/fosscell-logo.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.foss-text span {
+    font-family: Minecraft;
+    font-size: 24px;
+    font-weight: bold;
+    word-spacing: 5px;
+    letter-spacing: 2px;
+    line-height: 1.2;
+}
+
+.maveli {
+    background-image: url(./assets/runningmaveli.gif);
+    background-size: cover;
+    width: 100px;
+    height: 100px;
+    margin: 10px 0;
+}
+
+.google-btn {
+    font-weight: 200;
+    letter-spacing: 1.5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: white;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 250px;
+    transition: background-color 0.3s ease;
+}
+
+.google-logo {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+}
+
+.google-btn:hover {
+    background-color: rgb(81, 223, 81);
+}
+
+/* Tablet styles */
+@media (min-width: 768px) {
+    .game-container {
+        width: 100%;
+        height: 400px;
+        max-width: 800px;
+        margin: 20px auto;
+        border: 2px solid;
+    }
+    
+    .player {
+        width: 70px;
+        height: 85px;
+    }
+    
+    @keyframes jump {
+        0% {
+            bottom: 0;
+        }
+        25% {
+            bottom: 150px;
+        }
+        50% {
+            bottom: 150px;
+        }
+        100% {
+            bottom: 0;
+        }
+    }
+    
+    .obstacle {
+        width: 45px;
+        height: 60px;
+    }
+    
+    .obstacle-s { width: 50px; height: 65px; }
+    .obstacle-m { width: 60px; height: 75px; }
+    .obstacle-l { width: 70px; height: 85px; }
+    
+    .score-card {
+        font-size: 24px;
+        margin: 15px;
+    }
+    
+    .restart-game {
+        width: 90px;
+        height: 140px;
+        font-size: 24px;
+    }
+    
+    .restart-game .btn-reset-game {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .restart-game .text {
+        font-size: 18px;
+    }
+    
+    .main {
+        flex-direction: row;
+        gap: 20px;
+    }
+    
+    .foss {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .foss-text span {
+        font-size: 32px;
+        word-spacing: 8px;
+        letter-spacing: 4px;
+    }
+    
+    .maveli {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .google-btn {
+        font-size: 18px;
+        max-width: 300px;
+    }
+    
+    .google-logo {
+        width: 28px;
+        height: 28px;
+        margin-right: 10px;
+    }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+    .game-container {
+        width: 1200px;
+        height: 450px;
+        max-width: none;
+        max-height: none;
+        margin: 20px auto;
+    }
+    
+    .player {
+        width: 90px;
+        height: 105px;
+    }
+    
+    @keyframes jump {
+        0% {
+            bottom: 0;
+        }
+        25% {
+            bottom: 180px;
+        }
+        50% {
+            bottom: 180px;
+        }
+        100% {
+            bottom: 0;
+        }
+    }
+    
+    .obstacle {
+        width: 50px;
+        height: 70px;
+    }
+    
+    .obstacle-s { width: 60px; height: 80px; }
+    .obstacle-m { width: 70px; height: 90px; }
+    .obstacle-l { width: 80px; height: 100px; }
+    
+    .score-card {
+        font-size: 30px;
+        margin: 20px;
+    }
+    
+    .score-card span {
+        margin-right: 20px;
+    }
+    
+    .restart-game {
+        width: 100px;
+        height: 150px;
+        font-size: 30px;
+    }
+    
+    .restart-game .content {
+        flex-direction: row;
+    }
+    
+    .restart-game .btn-reset-game {
+        width: 20px;
+        height: 20px;
+        margin-left: 15px;
+    }
+    
+    .restart-game .text {
+        align-self: end;
+        font-size: inherit;
+    }
+    
+    .obstacle2 {
+        width: 90px;
+        height: 75px;
+    }
+    
+    .main {
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .foss {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .foss-text span {
+        font-size: 40px;
+        word-spacing: 10px;
+        letter-spacing: 5px;
+    }
+    
+    .maveli {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        top: 10px;
+    }
+    
+    .google-btn {
+        font-size: 20px;
+        padding: 10px 20px;
+        max-width: none;
+        width: auto;
+    }
+    
+    .google-logo {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+}
+
+/* Extra small devices adjustments */
+@media (max-width: 480px) {
+    .game-container {
+        width: 100%;
+        height: 250px;
+        margin: 0;
+        border: 1px solid;
+    }
+    
+    .player {
+        width: 50px;
+        height: 60px;
+    }
+    
+    @keyframes jump {
+        0% {
+            bottom: 0;
+        }
+        25% {
+            bottom: 100px;
+        }
+        50% {
+            bottom: 100px;
+        }
+        100% {
+            bottom: 0;
+        }
+    }
+    
+    .obstacle {
+        width: 30px;
+        height: 40px;
+    }
+    
+    .obstacle-s { width: 35px; height: 45px; }
+    .obstacle-m { width: 40px; height: 50px; }
+    .obstacle-l { width: 45px; height: 55px; }
+    
+    .score-card {
+        font-size: 16px;
+        margin: 5px;
+    }
+    
+    .restart-game {
+        width: 70px;
+        height: 100px;
+        font-size: 16px;
+    }
+    
+    .restart-game .btn-reset-game {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .restart-game .text {
+        font-size: 14px;
+    }
+    
+    .foss {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .foss-text span {
+        font-size: 20px;
+        word-spacing: 3px;
+        letter-spacing: 1px;
+    }
+    
+    .maveli {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .google-btn {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+    
+    .google-logo {
+        width: 20px;
+        height: 20px;
+        margin-right: 6px;
+    }
+    
+    .index-body {
+        padding: 10px;
+    }
+}
+
+/* Landscape orientation for mobile devices */
+@media (max-height: 500px) and (orientation: landscape) {
+    .game-container {
+        height: calc(100vh - 60px);
+        max-height: none;
+    }
+    
+    .index-body {
+        min-height: 100vh;
+        padding: 5px;
+    }
+    
+    .main {
+        flex-direction: row;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .foss {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .foss-text span {
+        font-size: 16px;
+    }
+    
+    .maveli {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+.menu-body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #d4f0e7;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+.main-menu-container {
+    text-align: center;
+    background: #2e8b57;
+    padding: 40px 60px;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    color: white;
+}
+.main-menu-container h1 {
+    font-family: Minecraft;
+    color: #ddd;
+    margin-bottom: 30px;
+    font-size: 36px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+.menu-button {
+    font-family: Minecraft;
+    display: block;
+    width: 180px;
+    padding: 15px 0;
+    margin: 15px auto;
+    font-size: 20px;
+    background: #3cb371;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+.menu-button:hover {
+        background: #2e8b57;
+}
+
+
+.leader-body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #d4f0e7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+h1 {
+    color: #2e8b57;
+    margin-bottom: 30px;
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+table {
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+thead {
+    background: #3cb371;
+    color: white;
+}
+th, td {
+    text-align: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+}
+tbody tr:hover {
+    background-color: #f1f9f6;
+}
+.back-button {
+    margin-top: 30px;
+    padding: 12px 30px;
+    font-size: 18px;
+    background: #3cb371;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+.back-button:hover {
+    background: #2e8b57;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+  text-decoration-color: #0056b3;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  position: relative;
+}
+    
+input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #555;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.switch {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #007BFF;
+  cursor: pointer;
+  text-decoration: underline;
 }
