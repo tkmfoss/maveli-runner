@@ -1,5 +1,5 @@
 # FRONTEND_FOLDER_STRUCTURE
-
+```
 frontend
 ├── .env
 ├── .gitignore
@@ -29,3 +29,4 @@ frontend
 ├── mainmenu.css
 ├── mainmenu.html
 └── mainmenu.js
+```
