@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Maveli Runner - Leaderboard</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="leaderboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="leader-body">
     <h1>Leaderboard</h1>
@@ -19,8 +20,10 @@
         <tbody id="leaderboard">
         </tbody>
     </table>
-    <a href="mainmenu.html" class="back-button">Back to Menu</a>
-    <script type="module"  src="app.js">
-    </script>
+    <div class="button-container">
+        <a href="mainmenu.html" class="back-button">Back to Menu</a>
+        <button id="logout-btn" class="logout-button">Logout</button>
+    </div>
+    <script type="module" src="leaderboard.js"></script>
 </body>
 </html>

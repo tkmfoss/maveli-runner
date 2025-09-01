@@ -2,49 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Maveli Runner - Onam Festival Game</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maveli Runner - Index</title>
+  <link rel="stylesheet" href="index.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="index-body">
-  <div>
-    <div class="main">
-      <div class="foss"></div>
-      <div class="foss-text">
-        <span>TKM FOSS Presents<br>Maveli Runner</span>
-      </div>
-      <div class="maveli"></div>
+  <div class="main">
+    <div class="foss"></div>
+    <div class="foss-text">
+      <span>FOSS CELL</span>
     </div>
-
-    <div class="btn">
-      <button class="google-btn" id="openModal">
-        <img src="./assets/google.png" alt="Google" class="google-logo" />
-        Sign in with Email
-      </button>
-    </div>
-
-    <div class="modal" id="authModal">
+    <div class="maveli"></div>
+  </div>
+  <div class="btn">
+    <button id="openModal" class="email-btn">
+      <img src="./assets/email-logo.png" class="email-logo" alt="Email" />
+      Login / Signup
+    </button>
+  </div>
+  <div class="modal" id="authModal">
+    <div class="modal-content">
       <span class="close-btn" id="closeModal">&times;</span>
-      <div class="modal-content" id="modalContent">
-        <div id="loginForm">
-          <h2>Login</h2>
-          <input type="email" id="loginEmail" placeholder="Email" />
-          <input type="password" id="loginPassword" placeholder="Password" />
-          <button id="loginBtn">Login</button>
-          <div class="switch" id="toSignup">Don’t have an account? Sign up</div>
-        </div>
-        <div id="signupForm" style="display:none;">
-          <h2>Sign Up</h2>
-          <input type="text" id="signupUsername" placeholder="Username" />
-          <input type="email" id="signupEmail" placeholder="Email" />
-          <input type="password" id="signupPassword" placeholder="Password" />
-          <button id="signupBtn">Sign Up</button>
-          <div class="switch" id="toLogin">Already have an account? Login</div>
-        </div>
-      </div>
+      <form id="loginForm">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email" required />
+        <input type="password" id="loginPassword" placeholder="Password" required />
+        <button type="submit">Login</button>
+        <div id="toSignup" class="switch">Don't have an account? Sign Up</div>
+      </form>
+      <form id="signupForm" style="display:none;">
+        <h2>Sign Up</h2>
+        <input type="text" id="signupUsername" placeholder="Username" required />
+        <input type="email" id="signupEmail" placeholder="Email" required />
+        <input type="password" id="signupPassword" placeholder="Password" required />
+        <button type="submit">Sign Up</button>
+        <div id="toLogin" class="switch">Already have an account? Log In</div>
+      </form>
     </div>
   </div>
-
-  <script src="auth.js"></script>
+  <script type="module" src="auth.js"></script>
 </body>
 </html>

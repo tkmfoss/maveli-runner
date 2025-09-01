@@ -1,0 +1,62 @@
+/* =========================
+   FONT IMPORTS
+   ========================= */
+@font-face {
+    font-family: Minecraft;
+    src: url('./assets/Minecraft.ttf');
+}
+
+/* =========================
+   MENU PAGE STYLES
+   ========================= */
+
+/* Menu Body */
+.menu-body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #d4f0e7;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main Menu Container */
+.main-menu-container {
+    text-align: center;
+    background: #2e8b57;
+    padding: 40px 60px;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    color: white;
+}
+
+.main-menu-container h1 {
+    font-family: Minecraft;
+    color: #ddd;
+    margin-bottom: 30px;
+    font-size: 36px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+/* Menu Button */
+.menu-button {
+    font-family: Minecraft;
+    display: block;
+    width: 180px;
+    padding: 15px 0;
+    margin: 15px auto;
+    font-size: 20px;
+    background: #3cb371;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.menu-button:hover {
+    background: #2e8b57;
+}

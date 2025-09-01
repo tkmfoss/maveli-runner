@@ -1,0 +1,566 @@
+/* =========================
+   FONT IMPORTS
+   ========================= */
+@font-face {
+    font-family: Minecraft;
+    src: url('./assets/Minecraft.ttf');
+}
+
+/* Game Body */
+.game-body {
+    margin: 0;
+    padding: 40px 20px 20px 20px;
+    background: linear-gradient(135deg, #87CEEB, #98FB98);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* =========================
+   GAME STYLES
+   ========================= */
+.game-container {
+    width: 100%;
+    height: 300px;
+    margin: 0;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+    background-image: url('./assets/background1.png');
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+}
+
+.game-container.stop {
+    animation-play-state: paused;
+}
+
+/* Player */
+.player {
+    width: 60px;
+    height: 70px;
+    border: 1px solid blue;
+    position: absolute;
+    bottom: -10px;
+    left: 15%;
+    background-image: url('./assets/runningmaveli.gif');
+    background-size: cover;
+    background-position: center;
+}
+
+.player.jump {
+    animation: jump 1.2s infinite;
+    background-image: url('./assets/normalmaveli.png');
+    background-size: cover;
+}
+
+.player.stop {
+    background-image: url('./assets/normalmaveli.png');
+    background-size: cover;
+}
+
+/* Obstacles */
+.obstacle {
+    width: 35px;
+    height: 50px;
+    border: 1px solid red;
+    position: absolute;
+    bottom: -11px;
+    left: 99%;
+    animation: move 4s linear infinite;
+    background-image: url('./assets/obstacle3.webp');
+    background-size: cover;
+    background-position: center;
+    clip-path: polygon(20% 0%, 80% 20%, 100% 100%, 0% 100%);
+    transition: all 0.1s ease;
+}
+
+.obstacle.stop {
+    animation-play-state: paused;
+}
+
+.obstacle-s { 
+    width: 40px; 
+    height: 55px; 
+}
+
+.obstacle-m { 
+    width: 50px; 
+    height: 65px; 
+}
+
+.obstacle-l { 
+    width: 60px; 
+    height: 75px; 
+}
+
+.obstacle2 {
+    width: 60px;
+    height: 50px;
+    border: 1px solid red;
+    position: absolute;
+    bottom: 0;
+    left: 99%;
+}
+
+/* Score Card */
+.score-card {
+    font-family: Minecraft;
+    font-size: 18px;
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.score-card span {
+    margin-right: 15px;
+}
+
+/* Restart Game Modal */
+.restart-game {
+    visibility: hidden;
+    font-family: Minecraft;
+    background-color: #ffffffb8;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    z-index: 2;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.restart-game.show {
+    visibility: visible;
+}
+
+.restart-game .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.restart-game .btn-reset-game {
+    border: none;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-image: url('./assets/background2.webp');
+    background-size: contain;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.restart-game .text {
+    text-align: center;
+    font-size: 16px;
+}
+
+/* =========================
+   MODAL STYLES
+   ========================= */
+
+/* Modal Overlay */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+/* Modal Content */
+.modal-content {
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    text-decoration-color: #0056b3;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* Modal Inputs and Buttons */
+input {
+    width: 100%;
+    margin: 8px 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #555;
+    user-select: none;
+    transition: color 0.3s ease;
+}
+
+.switch {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #007BFF;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* =========================
+   ANIMATIONS
+   ========================= */
+
+@keyframes jump {
+    0% {
+        bottom: 0;
+    }
+    25% {
+        bottom: 120px;
+    }
+    50% {
+        bottom: 120px;
+    }
+    100% {
+        bottom: 0;
+    }
+}
+
+@keyframes move {
+    0% {
+        left: 100%;
+    }
+    100% {
+        left: -100px;
+    }
+}
+
+/* =========================
+   RESPONSIVE DESIGN - GAME
+   ========================= */
+
+/* Mobile Devices (max-width: 767px) */
+@media (max-width: 767px) {
+    .game-container {
+        width: 100vw;
+        height: 40vh;  /* Reduced from 60vh */
+        min-height: 250px;  /* Reduced from 320px */
+        max-height: 350px;  /* Added max height */
+        margin: 0;
+        border: 2px solid;
+        border-radius: 8px;
+    }
+    
+    .player {
+        width: 50px;  /* Reduced size */
+        height: 60px;  /* Reduced size */
+        left: 12%;
+    }
+    
+    @keyframes jump {
+        0% { bottom: 0; }
+        25% { bottom: 100px; }  /* Reduced jump height */
+        50% { bottom: 100px; }
+        100% { bottom: 0; }
+    }
+    
+    .obstacle {
+        width: 35px;  /* Reduced size */
+        height: 45px;  /* Reduced size */
+        animation: move 4s linear infinite;  /* Keep 4s consistent */
+    }
+    
+    .obstacle-s { width: 38px; height: 48px; }
+    .obstacle-m { width: 43px; height: 55px; }
+    .obstacle-l { width: 50px; height: 65px; }
+    
+    .score-card {
+        font-size: 18px;  /* Reduced size */
+        margin: 10px;
+        gap: 15px;
+    }
+    
+    .score-card span {
+        margin-right: 20px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        font-weight: bold;
+    }
+    
+    .restart-game {
+        width: 140px;  /* Reduced size */
+        height: 100px;  /* Reduced size */
+        font-size: 16px;
+        padding: 15px;
+    }
+    
+    .restart-game .content {
+        gap: 12px;
+    }
+    
+    .restart-game .btn-reset-game {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .restart-game .text {
+        font-size: 14px;
+        font-weight: bold;
+    }
+}
+
+/* Extra Small Devices (max-width: 480px) */
+@media (max-width: 480px) {
+    .game-container {
+        width: 100%;
+        height: 35vh;  /* Reduced from original */
+        min-height: 200px;  /* Reduced from 250px */
+        max-height: 280px;  /* Reduced from 300px */
+        margin: 20px 0 0 0;
+        border: 2px solid;
+    }
+    
+    .player {
+        width: 45px;  /* Further reduced */
+        height: 55px;  /* Further reduced */
+        left: 10%;
+    }
+    
+    @keyframes jump {
+        0% { bottom: 0; }
+        25% { bottom: 80px; }  /* Reduced jump height */
+        50% { bottom: 80px; }
+        100% { bottom: 0; }
+    }
+    
+    .obstacle {
+        width: 30px;  /* Further reduced */
+        height: 40px;  /* Further reduced */
+        animation: move 4s linear infinite;  /* Keep 4s consistent */
+    }
+    
+    .obstacle-s { width: 33px; height: 43px; }
+    .obstacle-m { width: 38px; height: 48px; }
+    .obstacle-l { width: 45px; height: 55px; }
+    
+    .score-card {
+        font-size: 16px;  /* Reduced */
+        margin: 8px;
+        gap: 12px;
+    }
+    
+    .score-card span {
+        margin-right: 15px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        font-weight: bold;
+    }
+    
+    .restart-game {
+        width: 120px;  /* Reduced */
+        height: 90px;  /* Reduced */
+        font-size: 14px;
+        padding: 12px;
+    }
+    
+    .restart-game .btn-reset-game {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .restart-game .text {
+        font-size: 12px;
+        font-weight: bold;
+    }
+}
+
+/* Landscape Orientation for Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .game-container {
+        height: calc(100vh - 80px);  /* Adjusted for landscape */
+        max-height: 300px;  /* Added max height for landscape */
+    }
+    
+    .player {
+        width: 40px;  /* Smaller in landscape */
+        height: 50px;
+    }
+    
+    @keyframes jump {
+        0% { bottom: 0; }
+        25% { bottom: 70px; }  /* Lower jump in landscape */
+        50% { bottom: 70px; }
+        100% { bottom: 0; }
+    }
+    
+    .obstacle {
+        width: 28px;  /* Smaller in landscape */
+        height: 38px;
+        animation: move 4s linear infinite;  /* Keep 4s consistent */
+    }
+    
+    .obstacle-s { width: 30px; height: 40px; }
+    .obstacle-m { width: 35px; height: 45px; }
+    .obstacle-l { width: 40px; height: 50px; }
+}
+
+/* Tablet Styles (min-width: 768px) */
+@media (min-width: 768px) {
+    .game-container {
+        width: 100%;
+        height: 350px;  /* Reduced from 400px */
+        max-width: 800px;
+        margin: 20px auto;
+        border: 2px solid;
+    }
+    
+    .player {
+        width: 60px;  /* Reduced */
+        height: 70px;  /* Reduced */
+    }
+    
+    @keyframes jump {
+        0% { bottom: 0; }
+        25% { bottom: 130px; }  /* Reduced jump height */
+        50% { bottom: 130px; }
+        100% { bottom: 0; }
+    }
+    
+    .obstacle {
+        width: 40px;  /* Reduced */
+        height: 50px;  /* Reduced */
+        animation: move 4s linear infinite;  /* Keep 4s consistent */
+    }
+    
+    .obstacle-s { width: 45px; height: 55px; }
+    .obstacle-m { width: 50px; height: 65px; }
+    .obstacle-l { width: 60px; height: 75px; }
+    
+    .score-card {
+        font-size: 22px;  /* Slightly reduced */
+        margin: 15px;
+    }
+    
+    .restart-game {
+        width: 90px;
+        height: 140px;
+        font-size: 24px;
+    }
+    
+    .restart-game .btn-reset-game {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .restart-game .text {
+        font-size: 18px;
+    }
+}
+
+/* Desktop Styles (min-width: 1024px) */
+@media (min-width: 1024px) {
+    .game-container {
+        width: 1200px;
+        height: 450px;
+        max-width: none;
+        max-height: none;
+        margin: 20px auto;
+    }
+    
+    .player {
+        width: 90px;
+        height: 105px;
+    }
+    
+    @keyframes jump {
+        0% { bottom: 0; }
+        25% { bottom: 180px; }
+        50% { bottom: 180px; }
+        100% { bottom: 0; }
+    }
+    
+    .obstacle {
+        width: 50px;
+        height: 70px;
+        animation: move 4s linear infinite;  /* Keep 4s consistent */
+    }
+    
+    .obstacle-s { width: 60px; height: 80px; }
+    .obstacle-m { width: 70px; height: 90px; }
+    .obstacle-l { width: 80px; height: 100px; }
+    
+    .score-card {
+        font-size: 30px;
+        margin: 20px;
+    }
+    
+    .score-card span {
+        margin-right: 20px;
+    }
+    
+    .restart-game {
+        width: 100px;
+        height: 150px;
+        font-size: 30px;
+    }
+    
+    .restart-game .content {
+        flex-direction: row;
+    }
+    
+    .restart-game .btn-reset-game {
+        width: 20px;
+        height: 20px;
+        margin-left: 15px;
+    }
+    
+    .restart-game .text {
+        align-self: end;
+        font-size: inherit;
+    }
+    
+    .obstacle2 {
+        width: 90px;
+        height: 75px;
+    }
+}

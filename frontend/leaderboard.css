@@ -1,0 +1,104 @@
+/* =========================
+   FONT IMPORTS
+   ========================= */
+@font-face {
+    font-family: Minecraft;
+    src: url('./assets/Minecraft.ttf');
+}
+
+/* =========================
+   LEADERBOARD STYLES
+   ========================= */
+
+/* Leader Body */
+.leader-body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #d4f0e7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* Leaderboard Title */
+h1 {
+    color: #2e8b57;
+    margin-bottom: 30px;
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Leaderboard Table */
+table {
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+thead {
+    background: #3cb371;
+    color: white;
+}
+
+th, td {
+    text-align: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+}
+
+tbody tr:hover {
+    background-color: #f1f9f6;
+}
+
+/* Back Button */
+/* ========================= BUTTON CONTAINER FOR SIDE-BY-SIDE BUTTONS ========================= */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between buttons */
+  margin-top: 30px;
+}
+
+/* ========================= BACK & LOGOUT BUTTONS ========================= */
+.back-button,
+.logout-button {
+  padding: 12px 30px;
+  font-size: 18px;
+  background: #3cb371;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease, box-shadow 0.2s;
+  font-family: Minecraft, Arial, sans-serif;
+  font-weight: bold;
+}
+
+.back-button:hover,
+.logout-button:hover {
+  background: #2e8b57;
+  box-shadow: 0 2px 8px rgba(44, 123, 93, 0.15);
+}
+
+/* ========================= RESPONSIVE BUTTONS ========================= */
+@media (max-width: 480px) {
+  .button-container {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  .back-button,
+  .logout-button {
+    font-size: 16px;
+    padding: 12px 0;
+    width: 100%;
+  }
+}
