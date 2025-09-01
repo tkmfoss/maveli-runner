@@ -1,4 +1,4 @@
-## FRONTEND_FOLDER_STRUCTURE
+# FRONTEND_FOLDER_STRUCTURE
 
 frontend
 ├── .env
@@ -29,5 +29,3 @@ frontend
 ├── mainmenu.css
 ├── mainmenu.html
 └── mainmenu.js
-
-undefined
