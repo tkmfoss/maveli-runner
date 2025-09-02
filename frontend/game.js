@@ -21,6 +21,16 @@ let collisonInterval;
 let scoreInterval;
 let changeObstacleInteral;
 
+let currentSpeed = 4000; 
+let currentJumpDuration = 1200; 
+let currentBackground = 1;
+let isBackground2 = false;
+
+const BASE_SPEED = 4000;
+const MIN_SPEED = 1000;
+const BASE_JUMP_DURATION = 1200;
+const MIN_JUMP_DURATION = 800;
+
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const isAuthenticated = await initializeAuthGuard();
@@ -36,6 +46,11 @@ function initGameSession() {
     gameStartTime = Date.now();
     gameEvents = [];
     gameActive = true;
+
+    currentSpeed = BASE_SPEED;
+    currentJumpDuration = BASE_JUMP_DURATION;
+    currentBackground = 1;
+    isBackground2 = false;
 }
 
 function recordGameEvent(eventType, additionalData = {}) {
@@ -51,7 +66,12 @@ function recordGameEvent(eventType, additionalData = {}) {
 
 function jumpListener() {
     document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('touchstart', handleTouchStart);
+    document.removeEventListener('click', handleClick);
+    
     document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('touchstart', handleTouchStart, { passive: false });
+    document.addEventListener('click', handleClick);
 }
 
 function handleKeyDown(event) {
@@ -59,6 +79,60 @@ function handleKeyDown(event) {
         event.preventDefault();
         jump();
     }
+}
+
+function handleTouchStart(event) {
+    if (!gameActive) return;
+    
+    const target = event.target;
+
+    const isModalVisible = restartGameElement && restartGameElement.classList.contains('show');
+    const isModalButton = target.closest('.restart-game .btn-reset-game') || 
+                         target.closest('.restart-game .btn-main-menu-game') ||
+                         target.closest('.restart-game');
+    
+    if (isModalVisible && isModalButton) {
+        return;
+    }
+    
+    if (target.tagName === 'INPUT' || 
+        target.tagName === 'BUTTON' || 
+        target.tagName === 'SELECT' || 
+        target.tagName === 'TEXTAREA' ||
+        target.closest('.modal') ||
+        target.closest('form')) {
+        return;
+    }
+    
+    event.preventDefault();
+    jump();
+}
+
+function handleClick(event) {
+    if (!gameActive) return;
+    
+    const target = event.target;
+    
+    const isModalVisible = restartGameElement && restartGameElement.classList.contains('show');
+    const isModalButton = target.closest('.restart-game .btn-reset-game') || 
+                         target.closest('.restart-game .btn-main-menu-game') ||
+                         target.closest('.restart-game');
+    
+    if (isModalVisible && isModalButton) {
+        return;
+    }
+    
+    if (target.tagName === 'INPUT' || 
+        target.tagName === 'BUTTON' || 
+        target.tagName === 'SELECT' || 
+        target.tagName === 'TEXTAREA' ||
+        target.closest('.modal') ||
+        target.closest('form')) {
+        return;
+    }
+    
+    event.preventDefault();
+    jump();
 }
 
 function jump() {
@@ -71,7 +145,69 @@ function jump() {
     setTimeout(() => {
         playerElement.classList.remove('jump');
         jumping = false;
-    }, 1200)
+    }, currentJumpDuration);
+}
+
+function calculateCurrentSpeed(score) {
+
+    const speedReduction = Math.floor(score / 1000) * 400; 
+    const newSpeed = Math.max(MIN_SPEED, BASE_SPEED - speedReduction);
+    return newSpeed;
+}
+
+function calculateJumpDuration(speed) {
+    const speedRatio = speed / BASE_SPEED;
+    const newJumpDuration = Math.max(MIN_JUMP_DURATION, BASE_JUMP_DURATION * speedRatio);
+    return Math.round(newJumpDuration);
+}
+
+function updateGameDifficulty() {
+    const newSpeed = calculateCurrentSpeed(score);
+    const newJumpDuration = calculateJumpDuration(newSpeed);
+    
+    if (newSpeed !== currentSpeed) {
+        currentSpeed = newSpeed;
+        currentJumpDuration = newJumpDuration;
+        
+        restartObstacleAnimation();
+        recordGameEvent('difficulty_increase', { 
+            newSpeed: currentSpeed, 
+            newJumpDuration: currentJumpDuration 
+        });
+    }
+    
+    if (score >= 3000) {
+        const expectedBackground = Math.floor((score - 3000) / 1000) % 2 === 0 ? 2 : 1;
+        if (expectedBackground !== currentBackground) {
+            changeBackground(expectedBackground);
+        }
+    }
+}
+
+function restartObstacleAnimation() {
+    obstacleElement.style.animation = 'none';
+    obstacleElement.offsetHeight; 
+    obstacleElement.style.animation = `move ${currentSpeed / 1000}s linear infinite`;
+}
+
+function changeBackground(backgroundNumber) {
+    currentBackground = backgroundNumber;
+    const backgroundImage = backgroundNumber === 2 ? 'background2.webp' : 'background1.png';
+    
+    gamecontainerElement.style.transition = 'background-image 0.5s ease-in-out';
+    gamecontainerElement.style.backgroundImage = `url('./assets/${backgroundImage}')`;
+    gamecontainerElement.style.backgroundSize = 'cover';
+    gamecontainerElement.style.backgroundPosition = 'center'; 
+    
+    if (backgroundNumber === 2 && !isBackground2) {
+        isBackground2 = true;
+        obstacleElement.classList.add('obstacle2');
+        recordGameEvent('background_change', { background: backgroundNumber, obstacleType: 'obstacle2' });
+    } else if (backgroundNumber === 1 && isBackground2) {
+        isBackground2 = false;
+        obstacleElement.classList.remove('obstacle2');
+        recordGameEvent('background_change', { background: backgroundNumber, obstacleType: 'obstacle' });
+    }
 }
 
 function collisionDetection() {
@@ -139,6 +275,8 @@ function setScore(newScore) {
     if (scoreElement) {
         scoreElement.innerHTML = score;
     }
+
+    updateGameDifficulty();
 }
 
 function countScore() {
@@ -213,7 +351,9 @@ async function submitGameScore() {
                 duration: Date.now() - gameStartTime,
                 events: gameEvents,
                 finalScore: score,
-                eventCount: gameEvents.length
+                eventCount: gameEvents.length,
+                maxSpeed: currentSpeed,
+                backgroundsReached: currentBackground
             }
         };
 
@@ -252,10 +392,21 @@ function randomObstacle() {
     if (changeObstacleInteral) {
         clearInterval(changeObstacleInteral);
     }
+
     changeObstacleInteral = setInterval(() => {
         const obstacleSize = randomObstacleSize();
-        obstacleElement.className = `obstacle obstacle-${obstacleSize}`;
-        recordGameEvent('obstacle_change', { size: obstacleSize });
+        
+        if (isBackground2) {
+            obstacleElement.className = `obstacle obstacle2 obstacle-${obstacleSize}`;
+        } else {
+            obstacleElement.className = `obstacle obstacle-${obstacleSize}`;
+        }
+        
+        recordGameEvent('obstacle_change', { 
+            size: obstacleSize, 
+            background: currentBackground,
+            obstacleType: isBackground2 ? 'obstacle2' : 'obstacle'
+        });
     }, 4000)
 }
 
@@ -265,9 +416,17 @@ function stopGame() {
     if (scoreInterval) clearInterval(scoreInterval);
     if (changeObstacleInteral) clearInterval(changeObstacleInteral);
     
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('touchstart', handleTouchStart);
+    document.removeEventListener('click', handleClick);
+    
+    if (obstacleElement) {
+        obstacleElement.style.animationPlayState = 'paused';
+        obstacleElement.classList.add('stop');
+    }
+    
     if (restartGameElement) restartGameElement.classList.add('show');
     if (gamecontainerElement) gamecontainerElement.classList.add('stop');
-    if (obstacleElement) obstacleElement.classList.add('stop');
     if (playerElement) playerElement.classList.add('stop');
 }
 
@@ -312,7 +471,7 @@ async function initializeGame() {
         
         console.log('Game initialized successfully!');
         
-        setScore(0);
+        setScore(10000);
         
     } catch (error) {
         console.error('Error initializing game:', error);

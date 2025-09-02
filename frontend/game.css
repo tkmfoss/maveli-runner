@@ -6,7 +6,9 @@
     src: url('./assets/Minecraft.ttf');
 }
 
-/* Game Body */
+/* =========================
+   BASE BODY STYLES
+   ========================= */
 .game-body {
     margin: 0;
     padding: 40px 20px 20px 20px;
@@ -20,7 +22,7 @@
 }
 
 /* =========================
-   GAME STYLES
+   GAME CONTAINER
    ========================= */
 .game-container {
     width: 100%;
@@ -33,17 +35,23 @@
     background-size: cover;
     background-position: center;
     box-sizing: border-box;
+    transition: background-image 0.5s ease-in-out;
+    cursor: pointer; /* Indicates touch/click interaction */
 }
 
+/* Game container stopped state */
 .game-container.stop {
     animation-play-state: paused;
+    cursor: default; /* Remove pointer when game stopped */
+    pointer-events: none; /* Disable touch events on game container when stopped */
 }
 
-/* Player */
+/* =========================
+   PLAYER CHARACTER
+   ========================= */
 .player {
     width: 60px;
     height: 70px;
-    border: 1px solid blue;
     position: absolute;
     bottom: -10px;
     left: 15%;
@@ -52,22 +60,25 @@
     background-position: center;
 }
 
+/* Player jumping state */
 .player.jump {
     animation: jump 1.2s infinite;
     background-image: url('./assets/normalmaveli.png');
     background-size: cover;
 }
 
+/* Player stopped state */
 .player.stop {
     background-image: url('./assets/normalmaveli.png');
     background-size: cover;
 }
 
-/* Obstacles */
+/* =========================
+   OBSTACLES - BASE STYLES
+   ========================= */
 .obstacle {
     width: 35px;
     height: 50px;
-    border: 1px solid red;
     position: absolute;
     bottom: -11px;
     left: 99%;
@@ -79,10 +90,14 @@
     transition: all 0.1s ease;
 }
 
+/* Obstacle stopped state - basic */
 .obstacle.stop {
     animation-play-state: paused;
 }
 
+/* =========================
+   OBSTACLE SIZE VARIATIONS
+   ========================= */
 .obstacle-s { 
     width: 40px; 
     height: 55px; 
@@ -98,16 +113,64 @@
     height: 75px; 
 }
 
+/* =========================
+   ALTERNATIVE OBSTACLE TYPE (OBSTACLE2)
+   ========================= */
 .obstacle2 {
-    width: 60px;
-    height: 50px;
-    border: 1px solid red;
+    width: 80px;
+    height: 20px;
     position: absolute;
-    bottom: 0;
+    bottom: -20px;
     left: 99%;
+    background-image: url('./assets/obstacle2.webp');
+    background-size: cover;
+    background-position: center;
+    clip-path: polygon(20% 0%, 80% 20%, 100% 100%, 0% 100%);
+    transition: all 0.1s ease;
 }
 
-/* Score Card */
+/* Obstacle2 when applied to main obstacle class */
+.obstacle.obstacle2 {
+    width: 80px;
+    height: 20px;
+    bottom: -10px;
+    background-image: url('./assets/obstacle2.webp');
+}
+
+/* Obstacle2 size variations */
+.obstacle.obstacle2.obstacle-s { 
+    width: 75px; 
+    height: 45px; 
+}
+
+.obstacle.obstacle2.obstacle-m { 
+    width: 85px; 
+    height: 45px; 
+}
+
+.obstacle.obstacle2.obstacle-l { 
+    width: 95px; 
+    height: 45px; 
+}
+
+/* =========================
+   ENHANCED STOP STATES - COLLISION FIX
+   ========================= */
+/* Enhanced stop states with higher CSS specificity */
+.obstacle.stop,
+.obstacle.obstacle2.stop {
+    animation-play-state: paused !important;
+}
+
+/* Alternative approach - completely remove animation when game is stopped */
+.game-container.stop .obstacle {
+    animation: none !important;
+    animation-play-state: paused !important;
+}
+
+/* =========================
+   SCORE DISPLAY
+   ========================= */
 .score-card {
     font-family: Minecraft;
     font-size: 18px;
@@ -121,74 +184,140 @@
     margin-right: 15px;
 }
 
-/* ========================= RESTART GAME MODAL IMPROVED ========================= */
+/* =========================
+   GAME OVER / RESTART MODAL
+   ========================= */
 .restart-game {
+    /* Initial hidden state */
     visibility: hidden;
     opacity: 0;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -60%) scale(0.9);
-    min-width: 220px;
-    min-height: 150px;
+    
+    /* Modal dimensions */
+    min-width: 280px;
+    min-height: 180px;
     width: auto;
     max-width: 90vw;
     max-height: 85vh;
     padding: 28px 22px;
+    
+    /* Modal styling */
     background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
     box-shadow: 0 14px 48px rgba(0, 0, 0, 0.25);
+    
+    /* Layout */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
+    /* Typography */
     font-family: Minecraft, Arial, sans-serif;
     font-size: 24px;
-    color: #2e7d32; /* deeper green */
+    color: #2e7d32; /* Deep green */
+    
+    /* Layering and transitions */
     z-index: 2500;
     transition: opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s;
+    pointer-events: none; /* Disable pointer events when hidden */
 }
 
+/* Modal visible state */
 .restart-game.show {
     visibility: visible;
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
     transition-delay: 0s;
+    pointer-events: auto; /* Enable pointer events when shown */
 }
 
+/* Modal content wrapper */
 .restart-game .content {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
     width: 100%;
+    text-align: center;
 }
 
+/* Modal text styling */
 .restart-game .text {
-    text-align: center;
     font-size: 20px;
-    padding-bottom: 6px;
     font-weight: 700;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
 }
 
+/* Modal buttons container */
+.restart-game .buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================
+   MODAL BUTTONS
+   ========================= */
 .restart-game .btn-reset-game,
 .restart-game .btn-main-menu-game {
+    /* Reset default button styles */
     border: none;
-    display: inline-block;
-    width: 50px;
-    height: 50px;
     margin: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: #e6f4ea; /* subtle pastel green */
-    cursor: pointer;
+    padding: 5px;
+    
+    /* Button dimensions */
+    display: inline-flex;
+    width: 60px;
+    height: 60px;
+    
+    /* Button styling */
+    background-color: #e6f4ea; /* Subtle pastel green */
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(44, 123, 93, 0.2);
+    cursor: pointer;
+    
+    /* Button layout */
+    align-items: center;
+    justify-content: center;
+    
+    /* Button typography */
+    font-family: Minecraft, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #2e7d32;
+    text-align: center;
+    
+    /* Button behavior */
+    position: relative;
+    z-index: 2600;
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+    
+    /* Transitions */
     transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
+/* Button text content */
+.restart-game .btn-reset-game::after {
+    content: "Restart";
+    white-space: pre;
+    line-height: 1.2;
+}
+
+.restart-game .btn-main-menu-game::after {
+    content: "Menu";
+    white-space: pre;
+    line-height: 1.2;
+}
+
+/* Button hover and focus states */
 .restart-game .btn-reset-game:hover,
 .restart-game .btn-main-menu-game:hover,
 .restart-game .btn-reset-game:focus,
@@ -206,58 +335,17 @@
     outline-offset: 3px;
 }
 
-/* Responsive improvements */
-@media (max-width: 480px) {
-    .restart-game {
-        min-width: 180px;
-        min-height: 110px;
-        font-size: 18px;
-        padding: 18px 12px;
-        border-radius: 12px;
-    }
-    .restart-game .content {
-        gap: 14px;
-    }
-    .restart-game .btn-reset-game,
-    .restart-game .btn-main-menu-game {
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-    }
-    .restart-game .btn-reset-game:hover,
-    .restart-game .btn-main-menu-game:hover,
-    .restart-game .btn-reset-game:focus,
-    .restart-game .btn-main-menu-game:focus {
-        transform: scale(1.1);
-    }
+/* Touch feedback for mobile devices */
+.restart-game .btn-reset-game:active,
+.restart-game .btn-main-menu-game:active {
+    transform: scale(0.95);
+    background-color: #b8d4b7;
 }
-
-@media (min-width: 1024px) {
-    .restart-game {
-        min-width: 280px;
-        min-height: 180px;
-        font-size: 28px;
-        padding: 38px 30px;
-        border-radius: 20px;
-    }
-    .restart-game .content {
-        gap: 24px;
-    }
-    .restart-game .btn-reset-game,
-    .restart-game .btn-main-menu-game {
-        width: 60px;
-        height: 60px;
-        border-radius: 14px;
-    }
-}
-
-
 
 /* =========================
-   MODAL STYLES
+   GENERAL MODAL STYLES (AUTH/LOGIN)
    ========================= */
-
-/* Modal Overlay */
+/* Modal overlay */
 .modal {
     display: none;
     position: fixed;
@@ -275,7 +363,7 @@
     display: flex;
 }
 
-/* Modal Content */
+/* Modal content */
 .modal-content {
     background: white;
     color: black;
@@ -288,7 +376,10 @@
     position: relative;
 }
 
-/* Modal Inputs and Buttons */
+/* =========================
+   FORM ELEMENTS
+   ========================= */
+/* Input fields */
 input {
     width: 100%;
     margin: 8px 0;
@@ -299,6 +390,7 @@ input {
     font-size: 14px;
 }
 
+/* General buttons */
 button {
     width: 100%;
     padding: 10px;
@@ -315,6 +407,7 @@ button:hover {
     background: #0056b3;
 }
 
+/* Modal close button */
 .close-btn {
     position: absolute;
     top: 10px;
@@ -326,6 +419,7 @@ button:hover {
     transition: color 0.3s ease;
 }
 
+/* Switch/toggle text */
 .switch {
     margin-top: 15px;
     font-size: 14px;
@@ -335,9 +429,9 @@ button:hover {
 }
 
 /* =========================
-   ANIMATIONS
+   GAME ANIMATIONS
    ========================= */
-
+/* Player jump animation */
 @keyframes jump {
     0% {
         bottom: 0;
@@ -353,6 +447,7 @@ button:hover {
     }
 }
 
+/* Obstacle movement animation */
 @keyframes move {
     0% {
         left: 100%;
@@ -362,228 +457,348 @@ button:hover {
     }
 }
 
-/* =========================
-   RESPONSIVE DESIGN - GAME
-   ========================= */
+/* Fade in/out animation for touch instructions */
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    20%, 80% { opacity: 1; }
+}
 
+/* =========================
+   MOBILE TOUCH ENHANCEMENTS
+   ========================= */
+/* Touch-friendly styles for mobile devices */
+@media (hover: none) and (pointer: coarse) {
+    .game-container {
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+        touch-action: manipulation;
+    }
+    
+    /* Touch instruction overlay (appears on mobile) */
+    .game-container::before {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 10;
+        animation: fadeInOut 3s ease-in-out;
+    }
+    
+    /* Hide touch instructions when game is stopped */
+    .game-container.stop::before {
+        display: none;
+    }
+}
+
+/* =========================
+   RESPONSIVE DESIGN - MOBILE DEVICES
+   ========================= */
 /* Mobile Devices (max-width: 767px) */
 @media (max-width: 767px) {
+    /* Game container adjustments - Made taller for better gameplay */
     .game-container {
         width: 100vw;
-        height: 40vh;  /* Reduced from 60vh */
-        min-height: 250px;  /* Reduced from 320px */
-        max-height: 350px;  /* Added max height */
+        height: 50vh;
+        min-height: 300px;
+        max-height: 400px;
         margin: 0;
         border: 2px solid;
         border-radius: 8px;
     }
     
+    /* Player character scaling - SIGNIFICANTLY LARGER */
     .player {
-        width: 50px;  /* Reduced size */
-        height: 60px;  /* Reduced size */
+        width: 80px;   /* Increased from 50px */
+        height: 95px;  /* Increased from 60px */
         left: 12%;
+        bottom: -5px;  /* Adjusted positioning */
     }
     
+    /* Adjusted jump animation for mobile - Higher jump for larger player */
     @keyframes jump {
-        0% { bottom: 0; }
-        25% { bottom: 100px; }  /* Reduced jump height */
-        50% { bottom: 100px; }
-        100% { bottom: 0; }
+        0% { bottom: -5px; }
+        25% { bottom: 140px; }   /* Increased from 100px */
+        50% { bottom: 140px; }
+        100% { bottom: -5px; }
     }
     
+    /* Obstacle scaling - SIGNIFICANTLY LARGER */
     .obstacle {
-        width: 35px;  /* Reduced size */
-        height: 45px;  /* Reduced size */
-        animation: move 4s linear infinite;  /* Keep 4s consistent */
+        width: 55px;   /* Increased from 35px */
+        height: 70px;  /* Increased from 45px */
+        bottom: -8px;  /* Adjusted positioning */
+        animation: move 4s linear infinite;
     }
     
-    .obstacle-s { width: 38px; height: 48px; }
-    .obstacle-m { width: 43px; height: 55px; }
-    .obstacle-l { width: 50px; height: 65px; }
+    /* Obstacle size variations for mobile - All increased */
+    .obstacle-s { 
+        width: 60px;   /* Increased from 38px */
+        height: 75px;  /* Increased from 48px */
+    }
+    .obstacle-m { 
+        width: 70px;   /* Increased from 43px */
+        height: 85px;  /* Increased from 55px */
+    }
+    .obstacle-l { 
+        width: 80px;   /* Increased from 50px */
+        height: 95px;  /* Increased from 65px */
+    }
     
+    /* Obstacle2 scaling - SIGNIFICANTLY LARGER */
+    .obstacle.obstacle2 {
+        width: 90px;   /* Increased from 50px */
+        height: 60px;  /* Increased from 40px */
+        bottom: -5px;  /* Adjusted positioning */
+    }
+    
+    .obstacle.obstacle2.obstacle-s { 
+        width: 95px;   /* Increased from 53px */
+        height: 65px;  /* Increased from 43px */
+    }
+    .obstacle.obstacle2.obstacle-m { 
+        width: 105px;  /* Increased from 58px */
+        height: 75px;  /* Increased from 48px */
+    }
+    .obstacle.obstacle2.obstacle-l { 
+        width: 115px;  /* Increased from 65px */
+        height: 85px;  /* Increased from 55px */
+    }
+    
+    /* Score display adjustments - Made larger and more visible */
     .score-card {
-        font-size: 18px;  /* Reduced size */
-        margin: 10px;
+        font-size: 22px;   /* Increased from 18px */
+        margin: 15px;      /* Increased margin */
+        gap: 20px;         /* Increased gap */
+    }
+    
+    .score-card span {
+        margin-right: 25px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        font-weight: bold;
+        padding: 8px 12px;                    /* Added padding */
+        background: rgba(255,255,255,0.2);    /* Added background */
+        border-radius: 8px;                   /* Added border radius */
+        backdrop-filter: blur(5px);           /* Added blur effect */
+    }
+}
+
+/* =========================
+   RESPONSIVE DESIGN - EXTRA SMALL DEVICES
+   ========================= */
+/* Extra Small Devices (max-width: 480px) */
+@media (max-width: 480px) {
+    /* Game container for very small screens - Even taller */
+    .game-container {
+        width: 100%;
+        height: 45vh;
+        min-height: 280px;
+        max-height: 350px;
+        margin: 20px 0 0 0;
+        border: 2px solid;
+    }
+    
+    /* Player size for small screens - Still large and visible */
+    .player {
+        width: 75px;   /* Slightly smaller than regular mobile but still large */
+        height: 90px;
+        left: 10%;
+        bottom: -5px;
+    }
+    
+    /* Jump height for small screens */
+    @keyframes jump {
+        0% { bottom: -5px; }
+        25% { bottom: 120px; }   /* Good height for small screens */
+        50% { bottom: 120px; }
+        100% { bottom: -5px; }
+    }
+    
+    /* Obstacle sizes for small screens - Still clearly visible */
+    .obstacle {
+        width: 50px;   /* Increased from 30px */
+        height: 65px;  /* Increased from 40px */
+        bottom: -8px;
+        animation: move 4s linear infinite;
+    }
+    
+    .obstacle-s { width: 55px; height: 70px; }  /* All increased */
+    .obstacle-m { width: 65px; height: 80px; }
+    .obstacle-l { width: 75px; height: 90px; }
+    
+    .obstacle.obstacle2 {
+        width: 85px;   /* Increased from 45px */
+        height: 55px;  /* Increased from 35px */
+        bottom: -5px;
+    }
+    
+    .obstacle.obstacle2.obstacle-s { width: 90px; height: 60px; }
+    .obstacle.obstacle2.obstacle-m { width: 100px; height: 70px; }
+    .obstacle.obstacle2.obstacle-l { width: 110px; height: 80px; }
+    
+    /* Score display for small screens - Still prominent */
+    .score-card {
+        font-size: 20px;   /* Increased from 16px */
+        margin: 12px;
         gap: 15px;
     }
     
     .score-card span {
         margin-right: 20px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         font-weight: bold;
+        padding: 6px 10px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 6px;
+        backdrop-filter: blur(5px);
     }
     
+    /* Restart modal adjustments for small screens */
     .restart-game {
-        width: 140px;  /* Reduced size */
-        height: 100px;  /* Reduced size */
-        font-size: 16px;
-        padding: 15px;
+        min-width: 260px;  /* Slightly larger */
+        min-height: 160px;
+        font-size: 20px;   /* Larger text */
+        padding: 22px 16px;
+        border-radius: 12px;
     }
     
     .restart-game .content {
-        gap: 12px;
-    }
-    
-    .restart-game .btn-reset-game {
-        width: 30px;
-        height: 30px;
+        gap: 18px;
     }
     
     .restart-game .text {
-        font-size: 14px;
-        font-weight: bold;
+        font-size: 18px;   /* Larger text */
+    }
+    
+    .restart-game .btn-reset-game,
+    .restart-game .btn-main-menu-game {
+        width: 55px;       /* Slightly larger buttons */
+        height: 55px;
+        border-radius: 8px;
+        font-size: 11px;
+    }
+    
+    .restart-game .buttons {
+        gap: 15px;
     }
 }
 
-/* Extra Small Devices (max-width: 480px) */
-@media (max-width: 480px) {
-    .game-container {
-        width: 100%;
-        height: 35vh;  /* Reduced from original */
-        min-height: 200px;  /* Reduced from 250px */
-        max-height: 280px;  /* Reduced from 300px */
-        margin: 20px 0 0 0;
-        border: 2px solid;
-    }
-    
-    .player {
-        width: 45px;  /* Further reduced */
-        height: 55px;  /* Further reduced */
-        left: 10%;
-    }
-    
-    @keyframes jump {
-        0% { bottom: 0; }
-        25% { bottom: 80px; }  /* Reduced jump height */
-        50% { bottom: 80px; }
-        100% { bottom: 0; }
-    }
-    
-    .obstacle {
-        width: 30px;  /* Further reduced */
-        height: 40px;  /* Further reduced */
-        animation: move 4s linear infinite;  /* Keep 4s consistent */
-    }
-    
-    .obstacle-s { width: 33px; height: 43px; }
-    .obstacle-m { width: 38px; height: 48px; }
-    .obstacle-l { width: 45px; height: 55px; }
-    
-    .score-card {
-        font-size: 16px;  /* Reduced */
-        margin: 8px;
-        gap: 12px;
-    }
-    
-    .score-card span {
-        margin-right: 15px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        font-weight: bold;
-    }
-    
-    .restart-game {
-        width: 120px;  /* Reduced */
-        height: 90px;  /* Reduced */
-        font-size: 14px;
-        padding: 12px;
-    }
-    
-    .restart-game .btn-reset-game {
-        width: 25px;
-        height: 25px;
-    }
-    
-    .restart-game .text {
-        font-size: 12px;
-        font-weight: bold;
-    }
-}
-
+/* =========================
+   RESPONSIVE DESIGN - LANDSCAPE ORIENTATION
+   ========================= */
 /* Landscape Orientation for Mobile */
 @media (max-height: 500px) and (orientation: landscape) {
+    /* Game container adjustments for landscape */
     .game-container {
-        height: calc(100vh - 80px);  /* Adjusted for landscape */
-        max-height: 300px;  /* Added max height for landscape */
+        height: calc(100vh - 80px);
+        max-height: 300px;
     }
     
+    /* Maintain good size for landscape - don't make too small */
     .player {
-        width: 40px;  /* Smaller in landscape */
-        height: 50px;
+        width: 65px;   /* Increased from 40px */
+        height: 75px;  /* Increased from 50px */
+        bottom: -5px;
     }
     
+    /* Jump height for landscape mode */
     @keyframes jump {
-        0% { bottom: 0; }
-        25% { bottom: 70px; }  /* Lower jump in landscape */
-        50% { bottom: 70px; }
-        100% { bottom: 0; }
+        0% { bottom: -5px; }
+        25% { bottom: 100px; }  /* Increased from 70px */
+        50% { bottom: 100px; }
+        100% { bottom: -5px; }
     }
     
+    /* Obstacles for landscape - Still visible */
     .obstacle {
-        width: 28px;  /* Smaller in landscape */
-        height: 38px;
-        animation: move 4s linear infinite;  /* Keep 4s consistent */
+        width: 45px;   /* Increased from 28px */
+        height: 60px;  /* Increased from 38px */
+        bottom: -8px;
+        animation: move 4s linear infinite;
     }
     
-    .obstacle-s { width: 30px; height: 40px; }
-    .obstacle-m { width: 35px; height: 45px; }
-    .obstacle-l { width: 40px; height: 50px; }
+    .obstacle-s { width: 50px; height: 65px; }
+    .obstacle-m { width: 60px; height: 75px; }
+    .obstacle-l { width: 70px; height: 85px; }
+    
+    .obstacle.obstacle2 {
+        width: 75px;   /* Increased from 40px */
+        height: 50px;  /* Increased from 30px */
+        bottom: -5px;
+    }
+    
+    .obstacle.obstacle2.obstacle-s { width: 80px; height: 55px; }
+    .obstacle.obstacle2.obstacle-m { width: 90px; height: 65px; }
+    .obstacle.obstacle2.obstacle-l { width: 100px; height: 75px; }
 }
 
+/* =========================
+   RESPONSIVE DESIGN - TABLET
+   ========================= */
 /* Tablet Styles (min-width: 768px) */
 @media (min-width: 768px) {
+    /* Tablet game container */
     .game-container {
         width: 100%;
-        height: 350px;  /* Reduced from 400px */
+        height: 350px;
         max-width: 800px;
         margin: 20px auto;
         border: 2px solid;
     }
     
+    /* Tablet player size */
     .player {
-        width: 60px;  /* Reduced */
-        height: 70px;  /* Reduced */
+        width: 60px;
+        height: 70px;
     }
     
+    /* Tablet jump height */
     @keyframes jump {
         0% { bottom: 0; }
-        25% { bottom: 130px; }  /* Reduced jump height */
+        25% { bottom: 130px; }
         50% { bottom: 130px; }
         100% { bottom: 0; }
     }
     
+    /* Tablet obstacle sizes */
     .obstacle {
-        width: 40px;  /* Reduced */
-        height: 50px;  /* Reduced */
-        animation: move 4s linear infinite;  /* Keep 4s consistent */
+        width: 40px;
+        height: 50px;
+        animation: move 4s linear infinite;
     }
     
     .obstacle-s { width: 45px; height: 55px; }
     .obstacle-m { width: 50px; height: 65px; }
     .obstacle-l { width: 60px; height: 75px; }
     
+    .obstacle.obstacle2 {
+        width: 65px;
+        height: 55px;
+    }
+    
+    .obstacle.obstacle2.obstacle-s { width: 70px; height: 60px; }
+    .obstacle.obstacle2.obstacle-m { width: 75px; height: 70px; }
+    .obstacle.obstacle2.obstacle-l { width: 85px; height: 80px; }
+    
+    /* Tablet score display */
     .score-card {
-        font-size: 22px;  /* Slightly reduced */
+        font-size: 22px;
         margin: 15px;
-    }
-    
-    .restart-game {
-        width: 90px;
-        height: 140px;
-        font-size: 24px;
-    }
-    
-    .restart-game .btn-reset-game {
-        width: 30px;
-        height: 30px;
-    }
-    
-    .restart-game .text {
-        font-size: 18px;
     }
 }
 
+/* =========================
+   RESPONSIVE DESIGN - DESKTOP
+   ========================= */
 /* Desktop Styles (min-width: 1024px) */
 @media (min-width: 1024px) {
+    /* Desktop game container */
     .game-container {
         width: 1200px;
         height: 450px;
@@ -592,11 +807,13 @@ button:hover {
         margin: 20px auto;
     }
     
+    /* Desktop player size */
     .player {
         width: 90px;
         height: 105px;
     }
     
+    /* Desktop jump height */
     @keyframes jump {
         0% { bottom: 0; }
         25% { bottom: 180px; }
@@ -604,16 +821,27 @@ button:hover {
         100% { bottom: 0; }
     }
     
+    /* Desktop obstacle sizes */
     .obstacle {
         width: 50px;
         height: 70px;
-        animation: move 4s linear infinite;  /* Keep 4s consistent */
+        animation: move 4s linear infinite;
     }
     
     .obstacle-s { width: 60px; height: 80px; }
     .obstacle-m { width: 70px; height: 90px; }
     .obstacle-l { width: 80px; height: 100px; }
     
+    .obstacle.obstacle2 {
+        width: 90px;
+        height: 75px;
+    }
+    
+    .obstacle.obstacle2.obstacle-s { width: 95px; height: 80px; }
+    .obstacle.obstacle2.obstacle-m { width: 105px; height: 90px; }
+    .obstacle.obstacle2.obstacle-l { width: 115px; height: 100px; }
+    
+    /* Desktop score display */
     .score-card {
         font-size: 30px;
         margin: 20px;
@@ -623,29 +851,32 @@ button:hover {
         margin-right: 20px;
     }
     
+    /* Desktop restart modal */
     .restart-game {
-        width: 100px;
-        height: 150px;
-        font-size: 30px;
+        min-width: 320px;
+        min-height: 200px;
+        font-size: 28px;
+        padding: 38px 30px;
+        border-radius: 20px;
     }
     
     .restart-game .content {
-        flex-direction: row;
-    }
-    
-    .restart-game .btn-reset-game {
-        width: 20px;
-        height: 20px;
-        margin-left: 15px;
+        gap: 24px;
     }
     
     .restart-game .text {
-        align-self: end;
-        font-size: inherit;
+        font-size: 24px;
     }
     
-    .obstacle2 {
-        width: 90px;
-        height: 75px;
+    .restart-game .btn-reset-game,
+    .restart-game .btn-main-menu-game {
+        width: 70px;
+        height: 70px;
+        border-radius: 14px;
+        font-size: 14px;
+    }
+    
+    .restart-game .buttons {
+        gap: 20px;
     }
 }
