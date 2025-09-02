@@ -97,7 +97,7 @@
     background-size: cover;
     background-position: center;
     clip-path: polygon(20% 0%, 80% 20%, 100% 100%, 0% 100%);
-    transition: all 0.1s ease;
+    /* Removed transition to prevent visual glitches */
     /* Ensure stable positioning */
     z-index: 5;
 }
@@ -138,7 +138,7 @@
     background-size: cover;
     background-position: center;
     clip-path: polygon(20% 0%, 80% 20%, 100% 100%, 0% 100%);
-    transition: all 0.1s ease;
+    /* Removed transition to prevent visual glitches */
 }
 
 /* Obstacle2 when applied to main obstacle class */
@@ -489,7 +489,6 @@ button:hover {
     
     /* Touch instruction overlay (appears on mobile) */
     .game-container::before {
-        content: "Tap to jump!";
         position: absolute;
         top: 10px;
         left: 50%;

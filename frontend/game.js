@@ -33,7 +33,7 @@ let isBackground2 = false;
 
 // Add flag to track if we need to wait for obstacle to complete
 let waitingForObstacleCompletion = false;
-let pendingSpeedChange = null;
+let pendingDifficultyChange = null;
 
 const BASE_SPEED = 4000;
 const MIN_SPEED = 1000;
@@ -155,7 +155,7 @@ function initGameSession() {
     currentBackground = 1;
     isBackground2 = false;
     waitingForObstacleCompletion = false;
-    pendingSpeedChange = null;
+    pendingDifficultyChange = null;
 }
 
 function recordGameEvent(eventType, additionalData = {}) {
@@ -276,49 +276,48 @@ function isObstacleOffScreen() {
 function updateGameDifficulty() {
     const newSpeed = calculateCurrentSpeed(score);
     const newJumpDuration = calculateJumpDuration(newSpeed);
+    let expectedBackground = currentBackground;
     
-    // For scores below 3000, wait for obstacle to complete before changing speed
-    if (score < 3000 && newSpeed !== currentSpeed) {
+    // Calculate expected background for scores 3000+
+    if (score >= 3000) {
+        expectedBackground = Math.floor((score - 3000) / 1000) % 2 === 0 ? 2 : 1;
+    }
+    
+    const needChange = (newSpeed !== currentSpeed) || (score >= 3000 && expectedBackground !== currentBackground);
+    
+    if (needChange) {
         if (!waitingForObstacleCompletion) {
             waitingForObstacleCompletion = true;
-            pendingSpeedChange = {
+            pendingDifficultyChange = {
                 speed: newSpeed,
-                jumpDuration: newJumpDuration
+                jumpDuration: newJumpDuration,
+                background: expectedBackground
             };
             
             // Check periodically if obstacle is off-screen
             const checkObstacle = setInterval(() => {
                 if (isObstacleOffScreen() || !gameActive) {
                     clearInterval(checkObstacle);
-                    if (gameActive && pendingSpeedChange) {
-                        currentSpeed = pendingSpeedChange.speed;
-                        currentJumpDuration = pendingSpeedChange.jumpDuration;
+                    if (gameActive && pendingDifficultyChange) {
+                        currentSpeed = pendingDifficultyChange.speed;
+                        currentJumpDuration = pendingDifficultyChange.jumpDuration;
+                        
+                        // Only change background if needed
+                        if (pendingDifficultyChange.background !== currentBackground) {
+                            changeBackground(pendingDifficultyChange.background);
+                        }
+                        
                         restartObstacleAnimation();
                         recordGameEvent('difficulty_increase', { 
                             newSpeed: currentSpeed, 
-                            newJumpDuration: currentJumpDuration 
+                            newJumpDuration: currentJumpDuration,
+                            newBackground: pendingDifficultyChange.background
                         });
                         waitingForObstacleCompletion = false;
-                        pendingSpeedChange = null;
+                        pendingDifficultyChange = null;
                     }
                 }
             }, 50);
-        }
-    } else if (score >= 3000 && newSpeed !== currentSpeed) {
-        // After 3000, change immediately as before
-        currentSpeed = newSpeed;
-        currentJumpDuration = newJumpDuration;
-        restartObstacleAnimation();
-        recordGameEvent('difficulty_increase', { 
-            newSpeed: currentSpeed, 
-            newJumpDuration: currentJumpDuration 
-        });
-    }
-    
-    if (score >= 3000) {
-        const expectedBackground = Math.floor((score - 3000) / 1000) % 2 === 0 ? 2 : 1;
-        if (expectedBackground !== currentBackground) {
-            changeBackground(expectedBackground);
         }
     }
 }
@@ -371,46 +370,13 @@ function isCollision() {
     const playerRect = playerElement.getBoundingClientRect();
     const obstacleRect = obstacleElement.getBoundingClientRect();
     
-    const polygonPoints = [
-        {
-            x: obstacleRect.left + (obstacleRect.width * 0.20), 
-            y: obstacleRect.top + (obstacleRect.height * 0.00)  
-        },
-        {
-            x: obstacleRect.left + (obstacleRect.width * 0.80), 
-            y: obstacleRect.top + (obstacleRect.height * 0.20)  
-        },
-        {
-            x: obstacleRect.left + (obstacleRect.width * 1.00), 
-            y: obstacleRect.top + (obstacleRect.height * 1.00)  
-        },
-        {
-            x: obstacleRect.left + (obstacleRect.width * 0.00), 
-            y: obstacleRect.top + (obstacleRect.height * 1.00)  
-        }
-    ];
-    
-    const playerPoints = [
-        { x: playerRect.left + playerRect.width * 0.2, y: playerRect.bottom - 8 }, 
-        { x: playerRect.right - playerRect.width * 0.2, y: playerRect.bottom - 8 }, 
-        { x: playerRect.left + playerRect.width * 0.5, y: playerRect.top + playerRect.height * 0.8 }, 
-        { x: playerRect.left + playerRect.width * 0.5, y: playerRect.top + 5 } 
-    ];
-    
-    return playerPoints.some(point => isPointInPolygon(point, polygonPoints));
-}
-
-function isPointInPolygon(point, polygon) {
-    let inside = false;
-    
-    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-        if (((polygon[i].y > point.y) !== (polygon[j].y > point.y)) &&
-            (point.x < (polygon[j].x - polygon[i].x) * (point.y - polygon[i].y) / (polygon[j].y - polygon[i].y) + polygon[i].x)) {
-            inside = !inside;
-        }
-    }
-    
-    return inside;
+    // Use simpler rectangle collision for better performance and accuracy
+    return !(
+        playerRect.right < obstacleRect.left + 10 || 
+        playerRect.left + 10 > obstacleRect.right || 
+        playerRect.bottom < obstacleRect.top + 10 || 
+        playerRect.top + 10 > obstacleRect.bottom
+    );
 }
 
 function setScore(newScore) {
