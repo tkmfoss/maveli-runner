@@ -113,10 +113,10 @@ async function handleSignup(event) {
             icon: 'success',
             title: 'Signup Successful!',
             html: `<span style="background-color: yellow; font-weight: bold; padding: 4px; border-radius: 3px;">
-                    Please verify your email using the link we sent you to complete your login.
+                    Please verify your email using the link we sent you in your mail to complete your login.
                 </span>`,
             confirmButtonText: 'Continue',
-            timer: 3000,
+            timer: 5000,
             timerProgressBar: true
         });
 
