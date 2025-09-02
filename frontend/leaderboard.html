@@ -8,21 +8,36 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="leader-body">
-    <h1>Leaderboard</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Player</th>
-                <th>Score</th>
-            </tr>
-        </thead>
-        <tbody id="leaderboard">
-        </tbody>
-    </table>
-    <div class="button-container">
-        <a href="mainmenu.html" class="back-button">Back to Menu</a>
-        <button id="logout-btn" class="logout-button">Logout</button>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-title">Leaderboard</div>
+            <div class="loading-subtitle">Loading top scores...</div>
+            <div class="loading-spinner"></div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar" id="progressBar"></div>
+            </div>
+            <div class="loading-text" id="loadingText">Fetching leaderboard data...</div>
+        </div>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <h1>Leaderboard</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboard">
+            </tbody>
+        </table>
+        <div class="button-container">
+            <a href="mainmenu.html" class="back-button">Back to Menu</a>
+            <button id="logout-btn" class="logout-button">Logout</button>
+        </div>
     </div>
     <script type="module" src="leaderboard.js"></script>
 </body>

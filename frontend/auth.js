@@ -112,12 +112,14 @@ async function handleSignup(event) {
         await Swal.fire({
             icon: 'success',
             title: 'Signup Successful!',
-            text: `Please verify your email from the mail to login`,
+            html: `<span style="background-color: yellow; font-weight: bold; padding: 4px; border-radius: 3px;">
+                    Please verify your email using the link we sent you to complete your login.
+                </span>`,
             confirmButtonText: 'Continue',
             timer: 3000,
             timerProgressBar: true
         });
-        
+
         event.target.reset();
         document.getElementById("signupForm").style.display = "none";
         document.getElementById("loginForm").style.display = "block";

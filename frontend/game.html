@@ -7,7 +7,19 @@
     <link rel="stylesheet" href="game.css">
 </head>
 <body class="game-body">
-    <div class="game-container">
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-title">Maveli Runner</div>
+            <div class="loading-subtitle">Preparing your Onam adventure...</div>
+            <div class="loading-spinner"></div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar" id="progressBar"></div>
+            </div>
+            <div class="loading-text" id="loadingText">Initializing game...</div>
+        </div>
+    </div>
+
+    <div class="game-container" id="gameContainer">
         <div class="score-card">
             <span>HI</span>
             <span class="high-score"></span>

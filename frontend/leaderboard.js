@@ -3,15 +3,78 @@ import { config } from "./config.js";
 
 const BACKEND_URL = config.BACKEND_URL;
 
+const loadingScreen = document.getElementById('loadingScreen');
+const progressBar = document.getElementById('progressBar');
+const loadingText = document.getElementById('loadingText');
+const mainContent = document.getElementById('mainContent');
+
+function updateLoadingProgress(progress, text) {
+    if (progressBar) {
+        progressBar.style.width = `${progress}%`;
+    }
+    if (loadingText) {
+        loadingText.textContent = text;
+    }
+}
+
+function showLoadingScreen() {
+    if (loadingScreen) {
+        loadingScreen.classList.remove('fade-out');
+        updateLoadingProgress(0, 'Loading...');
+    }
+    if (mainContent) {
+        mainContent.classList.remove('ready');
+    }
+}
+
+function hideLoadingScreen() {
+    if (loadingScreen) {
+        updateLoadingProgress(100, 'Ready!');
+        setTimeout(() => {
+            loadingScreen.classList.add('fade-out');
+            if (mainContent) {
+                mainContent.classList.add('ready');
+            }
+        }, 200);
+    }
+}
+
+async function simulateLoadingWithProgress() {
+    const steps = [
+        { progress: 25, text: 'Checking authentication...', duration: 400 },
+        { progress: 50, text: 'Connecting to server...', duration: 500 },
+        { progress: 75, text: 'Fetching leaderboard data...', duration: 600 },
+        { progress: 100, text: 'Ready!', duration: 200 }
+    ];
+
+    for (const step of steps) {
+        updateLoadingProgress(step.progress, step.text);
+        await new Promise(resolve => setTimeout(resolve, step.duration));
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     try {
+        showLoadingScreen();
+        
+        const loadingProgressPromise = simulateLoadingWithProgress();
+        
         const isAuthenticated = await initializeAuthGuard();
         if (isAuthenticated) {
             await fetchLeaderboard();
             setupLogout();
         }
+        
+        await loadingProgressPromise;
+        
+        setTimeout(() => {
+            hideLoadingScreen();
+        }, 300);
+        
     } catch (error) {
         console.error('Error during initialization:', error);
+        updateLoadingProgress(100, 'Error loading leaderboard');
+        setTimeout(hideLoadingScreen, 1000);
     }
 });
 
