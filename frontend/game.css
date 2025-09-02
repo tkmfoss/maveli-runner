@@ -625,43 +625,43 @@ button:hover {
     
     /* Obstacle scaling - SIGNIFICANTLY LARGER */
     .obstacle {
-        width: 55px;   /* Increased from 35px */
-        height: 70px;  /* Increased from 45px */
+        width: 40px;   /* Increased from 35px */
+        height: 55px;  /* Increased from 45px */
         bottom: -8px;  /* Adjusted positioning */
     }
     
     /* Obstacle size variations for mobile - All increased */
     .obstacle-s { 
-        width: 60px;   /* Increased from 38px */
-        height: 75px;  /* Increased from 48px */
+        width: 40px;   /* Increased from 38px */
+        height: 55px;  /* Increased from 48px */
     }
     .obstacle-m { 
-        width: 70px;   /* Increased from 43px */
-        height: 85px;  /* Increased from 55px */
+        width: 50px;   /* Increased from 43px */
+        height: 65px;  /* Increased from 55px */
     }
     .obstacle-l { 
-        width: 80px;   /* Increased from 50px */
-        height: 95px;  /* Increased from 65px */
+        width: 60px;   /* Increased from 50px */
+        height: 75px;  /* Increased from 65px */
     }
     
     /* Obstacle2 scaling - SIGNIFICANTLY LARGER */
     .obstacle.obstacle2 {
-        width: 90px;   /* Increased from 50px */
-        height: 60px;  /* Increased from 40px */
+        width: 70px;   /* Increased from 50px */
+        height: 50px;  /* Increased from 40px */
         bottom: -5px;  /* Adjusted positioning */
     }
     
     .obstacle.obstacle2.obstacle-s { 
-        width: 95px;   /* Increased from 53px */
-        height: 65px;  /* Increased from 43px */
+        width: 85px;   /* Increased from 53px */
+        height: 35px;  /* Increased from 43px */
     }
     .obstacle.obstacle2.obstacle-m { 
-        width: 105px;  /* Increased from 58px */
-        height: 75px;  /* Increased from 48px */
+        width: 95px;  /* Increased from 58px */
+        height: 45px;  /* Increased from 48px */
     }
     .obstacle.obstacle2.obstacle-l { 
-        width: 115px;  /* Increased from 65px */
-        height: 85px;  /* Increased from 55px */
+        width: 100px;  /* Increased from 65px */
+        height: 55px;  /* Increased from 55px */
     }
     
     /* Score display adjustments - Made larger and more visible */
@@ -715,24 +715,24 @@ button:hover {
     
     /* Obstacle sizes for small screens - Still clearly visible */
     .obstacle {
-        width: 50px;   /* Increased from 30px */
+        width: 40px;   /* Increased from 30px */
         height: 65px;  /* Increased from 40px */
         bottom: -8px;
     }
     
-    .obstacle-s { width: 55px; height: 70px; }  /* All increased */
-    .obstacle-m { width: 65px; height: 80px; }
-    .obstacle-l { width: 75px; height: 90px; }
+    .obstacle-s { width: 45px; height: 60px; }  /* All increased */
+    .obstacle-m { width: 55px; height: 70px; }
+    .obstacle-l { width: 65px; height: 80px; }
     
     .obstacle.obstacle2 {
-        width: 85px;   /* Increased from 45px */
-        height: 55px;  /* Increased from 35px */
+        width: 75px;   /* Increased from 45px */
+        height: 45px;  /* Increased from 35px */
         bottom: -5px;
     }
     
-    .obstacle.obstacle2.obstacle-s { width: 90px; height: 60px; }
-    .obstacle.obstacle2.obstacle-m { width: 100px; height: 70px; }
-    .obstacle.obstacle2.obstacle-l { width: 110px; height: 80px; }
+    .obstacle.obstacle2.obstacle-s { width: 90px; height: 50px; }
+    .obstacle.obstacle2.obstacle-m { width: 100px; height: 60px; }
+    .obstacle.obstacle2.obstacle-l { width: 110px; height: 70px; }
     
     /* Score display for small screens - Still prominent */
     .score-card {
