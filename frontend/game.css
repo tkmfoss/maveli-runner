@@ -632,16 +632,16 @@ button:hover {
     
     /* Obstacle size variations for mobile - All increased */
     .obstacle-s { 
-        width: 40px;   /* Increased from 38px */
-        height: 55px;  /* Increased from 48px */
+        width: 30px;   /* Increased from 38px */
+        height: 45px;  /* Increased from 48px */
     }
     .obstacle-m { 
-        width: 50px;   /* Increased from 43px */
-        height: 65px;  /* Increased from 55px */
+        width: 40px;   /* Increased from 43px */
+        height: 55px;  /* Increased from 55px */
     }
     .obstacle-l { 
-        width: 60px;   /* Increased from 50px */
-        height: 75px;  /* Increased from 65px */
+        width: 50px;   /* Increased from 50px */
+        height: 65px;  /* Increased from 65px */
     }
     
     /* Obstacle2 scaling - SIGNIFICANTLY LARGER */
@@ -652,15 +652,15 @@ button:hover {
     }
     
     .obstacle.obstacle2.obstacle-s { 
-        width: 85px;   /* Increased from 53px */
+        width: 75px;   /* Increased from 53px */
         height: 35px;  /* Increased from 43px */
     }
     .obstacle.obstacle2.obstacle-m { 
-        width: 95px;  /* Increased from 58px */
+        width: 85px;  /* Increased from 58px */
         height: 45px;  /* Increased from 48px */
     }
     .obstacle.obstacle2.obstacle-l { 
-        width: 100px;  /* Increased from 65px */
+        width: 90px;  /* Increased from 65px */
         height: 55px;  /* Increased from 55px */
     }
     
@@ -720,9 +720,9 @@ button:hover {
         bottom: -8px;
     }
     
-    .obstacle-s { width: 45px; height: 60px; }  /* All increased */
-    .obstacle-m { width: 55px; height: 70px; }
-    .obstacle-l { width: 65px; height: 80px; }
+    .obstacle-s { width: 35px; height: 40px; }  /* All increased */
+    .obstacle-m { width: 45px; height: 50px; }
+    .obstacle-l { width: 50px; height: 65px; }
     
     .obstacle.obstacle2 {
         width: 75px;   /* Increased from 45px */
@@ -730,9 +730,9 @@ button:hover {
         bottom: -5px;
     }
     
-    .obstacle.obstacle2.obstacle-s { width: 90px; height: 50px; }
-    .obstacle.obstacle2.obstacle-m { width: 100px; height: 60px; }
-    .obstacle.obstacle2.obstacle-l { width: 110px; height: 70px; }
+    .obstacle.obstacle2.obstacle-s { width: 65px; height: 30px; }
+    .obstacle.obstacle2.obstacle-m { width: 75px; height: 40px; }
+    .obstacle.obstacle2.obstacle-l { width: 85px; height: 50px; }
     
     /* Score display for small screens - Still prominent */
     .score-card {
