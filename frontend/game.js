@@ -31,6 +31,10 @@ let currentJumpDuration = 1200;
 let currentBackground = 1;
 let isBackground2 = false;
 
+// Add flag to track if we need to wait for obstacle to complete
+let waitingForObstacleCompletion = false;
+let pendingSpeedChange = null;
+
 const BASE_SPEED = 4000;
 const MIN_SPEED = 1000;
 const BASE_JUMP_DURATION = 1200;
@@ -150,6 +154,8 @@ function initGameSession() {
     currentJumpDuration = BASE_JUMP_DURATION;
     currentBackground = 1;
     isBackground2 = false;
+    waitingForObstacleCompletion = false;
+    pendingSpeedChange = null;
 }
 
 function recordGameEvent(eventType, additionalData = {}) {
@@ -259,14 +265,49 @@ function calculateJumpDuration(speed) {
     return Math.round(newJumpDuration);
 }
 
+// Fixed function to handle obstacle completion before speed change
+function isObstacleOffScreen() {
+    if (!obstacleElement) return true;
+    const obstacleRect = obstacleElement.getBoundingClientRect();
+    const gameRect = gamecontainerElement.getBoundingClientRect();
+    return obstacleRect.right < gameRect.left;
+}
+
 function updateGameDifficulty() {
     const newSpeed = calculateCurrentSpeed(score);
     const newJumpDuration = calculateJumpDuration(newSpeed);
     
-    if (newSpeed !== currentSpeed) {
+    // For scores below 3000, wait for obstacle to complete before changing speed
+    if (score < 3000 && newSpeed !== currentSpeed) {
+        if (!waitingForObstacleCompletion) {
+            waitingForObstacleCompletion = true;
+            pendingSpeedChange = {
+                speed: newSpeed,
+                jumpDuration: newJumpDuration
+            };
+            
+            // Check periodically if obstacle is off-screen
+            const checkObstacle = setInterval(() => {
+                if (isObstacleOffScreen() || !gameActive) {
+                    clearInterval(checkObstacle);
+                    if (gameActive && pendingSpeedChange) {
+                        currentSpeed = pendingSpeedChange.speed;
+                        currentJumpDuration = pendingSpeedChange.jumpDuration;
+                        restartObstacleAnimation();
+                        recordGameEvent('difficulty_increase', { 
+                            newSpeed: currentSpeed, 
+                            newJumpDuration: currentJumpDuration 
+                        });
+                        waitingForObstacleCompletion = false;
+                        pendingSpeedChange = null;
+                    }
+                }
+            }, 50);
+        }
+    } else if (score >= 3000 && newSpeed !== currentSpeed) {
+        // After 3000, change immediately as before
         currentSpeed = newSpeed;
         currentJumpDuration = newJumpDuration;
-        
         restartObstacleAnimation();
         recordGameEvent('difficulty_increase', { 
             newSpeed: currentSpeed, 
@@ -285,7 +326,9 @@ function updateGameDifficulty() {
 function restartObstacleAnimation() {
     if (!obstacleElement) return;
     
+    // Force reflow to ensure clean animation restart
     obstacleElement.style.animation = 'none';
+    obstacleElement.style.left = '100%';
     obstacleElement.offsetHeight; 
     obstacleElement.style.animation = `move ${currentSpeed / 1000}s linear infinite`;
 }
@@ -560,7 +603,6 @@ function startGame() {
             obstacleElement.style.animation = `move ${currentSpeed / 1000}s linear infinite`;
         }
         
-     
         jumpListener();
         collisionDetection();
         countScore();

@@ -65,6 +65,8 @@
     background-image: url('./assets/runningmaveli.gif');
     background-size: cover;
     background-position: center;
+    /* Ensure stable positioning */
+    z-index: 10;
 }
 
 /* Player jumping state */
@@ -96,6 +98,8 @@
     background-position: center;
     clip-path: polygon(20% 0%, 80% 20%, 100% 100%, 0% 100%);
     transition: all 0.1s ease;
+    /* Ensure stable positioning */
+    z-index: 5;
 }
 
 /* Obstacle stopped state - basic */
@@ -609,76 +613,76 @@ button:hover {
     
     /* Player character scaling - SIGNIFICANTLY LARGER */
     .player {
-        width: 80px;   /* Increased from 50px */
-        height: 95px;  /* Increased from 60px */
+        width: 80px;   
+        height: 95px; 
         left: 12%;
-        bottom: -5px;  /* Adjusted positioning */
+        bottom: -5px;  
     }
     
     /* Adjusted jump animation for mobile - Higher jump for larger player */
     @keyframes jump {
         0% { bottom: -5px; }
-        25% { bottom: 140px; }   /* Increased from 100px */
+        25% { bottom: 140px; }   
         50% { bottom: 140px; }
         100% { bottom: -5px; }
     }
     
     /* Obstacle scaling - SIGNIFICANTLY LARGER */
     .obstacle {
-        width: 40px;   /* Increased from 35px */
-        height: 55px;  /* Increased from 45px */
-        bottom: -8px;  /* Adjusted positioning */
+        width: 30px;   
+        height: 45px; 
+        bottom: -8px;  
     }
     
     /* Obstacle size variations for mobile - All increased */
     .obstacle-s { 
-        width: 30px;   /* Increased from 38px */
-        height: 45px;  /* Increased from 48px */
+        width: 20px; 
+        height: 35px; 
     }
     .obstacle-m { 
-        width: 40px;   /* Increased from 43px */
-        height: 55px;  /* Increased from 55px */
+        width: 30px; 
+        height: 45px;  
     }
     .obstacle-l { 
-        width: 50px;   /* Increased from 50px */
-        height: 65px;  /* Increased from 65px */
+        width: 40px;   
+        height: 65px; 
     }
     
     /* Obstacle2 scaling - SIGNIFICANTLY LARGER */
     .obstacle.obstacle2 {
-        width: 70px;   /* Increased from 50px */
-        height: 50px;  /* Increased from 40px */
-        bottom: -5px;  /* Adjusted positioning */
+        width: 75px;   
+        height: 45px;  
+        bottom: -5px;  
     }
     
     .obstacle.obstacle2.obstacle-s { 
-        width: 75px;   /* Increased from 53px */
-        height: 35px;  /* Increased from 43px */
+        width: 65px;   
+        height: 35px; 
     }
     .obstacle.obstacle2.obstacle-m { 
-        width: 85px;  /* Increased from 58px */
-        height: 45px;  /* Increased from 48px */
+        width: 75px; 
+        height: 45px; 
     }
     .obstacle.obstacle2.obstacle-l { 
-        width: 90px;  /* Increased from 65px */
-        height: 55px;  /* Increased from 55px */
+        width: 80px;  
+        height: 55px;  
     }
     
     /* Score display adjustments - Made larger and more visible */
     .score-card {
-        font-size: 22px;   /* Increased from 18px */
-        margin: 15px;      /* Increased margin */
-        gap: 20px;         /* Increased gap */
+        font-size: 22px;   
+        margin: 15px;      
+        gap: 20px;         
     }
     
     .score-card span {
         margin-right: 25px;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         font-weight: bold;
-        padding: 8px 12px;                    /* Added padding */
-        background: rgba(255,255,255,0.2);    /* Added background */
-        border-radius: 8px;                   /* Added border radius */
-        backdrop-filter: blur(5px);           /* Added blur effect */
+        padding: 8px 12px;                 
+        background: rgba(255,255,255,0.2);  
+        border-radius: 8px;                   
+        backdrop-filter: blur(5px);           
     }
 }
 
@@ -699,7 +703,7 @@ button:hover {
     
     /* Player size for small screens - Still large and visible */
     .player {
-        width: 75px;   /* Slightly smaller than regular mobile but still large */
+        width: 75px;   
         height: 90px;
         left: 10%;
         bottom: -5px;
@@ -708,35 +712,35 @@ button:hover {
     /* Jump height for small screens */
     @keyframes jump {
         0% { bottom: -5px; }
-        25% { bottom: 120px; }   /* Good height for small screens */
+        25% { bottom: 120px; }   
         50% { bottom: 120px; }
         100% { bottom: -5px; }
     }
     
     /* Obstacle sizes for small screens - Still clearly visible */
     .obstacle {
-        width: 40px;   /* Increased from 30px */
-        height: 65px;  /* Increased from 40px */
+        width: 25px;   
+        height: 50px;  
         bottom: -8px;
     }
     
-    .obstacle-s { width: 35px; height: 40px; }  /* All increased */
-    .obstacle-m { width: 45px; height: 50px; }
-    .obstacle-l { width: 50px; height: 65px; }
+    .obstacle-s { width: 25px; height: 40px; }  
+    .obstacle-m { width: 25px; height: 45px; }
+    .obstacle-l { width: 30px; height: 50px; }
     
     .obstacle.obstacle2 {
-        width: 75px;   /* Increased from 45px */
-        height: 45px;  /* Increased from 35px */
+        width: 55px;   
+        height: 35px;  
         bottom: -5px;
     }
     
-    .obstacle.obstacle2.obstacle-s { width: 65px; height: 30px; }
-    .obstacle.obstacle2.obstacle-m { width: 75px; height: 40px; }
-    .obstacle.obstacle2.obstacle-l { width: 85px; height: 50px; }
+    .obstacle.obstacle2.obstacle-s { width: 55px; height: 30px; }
+    .obstacle.obstacle2.obstacle-m { width: 65px; height: 40px; }
+    .obstacle.obstacle2.obstacle-l { width: 75px; height: 40px; }
     
     /* Score display for small screens - Still prominent */
     .score-card {
-        font-size: 20px;   /* Increased from 16px */
+        font-size: 20px;  
         margin: 12px;
         gap: 15px;
     }
@@ -753,9 +757,9 @@ button:hover {
     
     /* Restart modal adjustments for small screens */
     .restart-game {
-        min-width: 260px;  /* Slightly larger */
+        min-width: 260px;  
         min-height: 160px;
-        font-size: 20px;   /* Larger text */
+        font-size: 20px;   
         padding: 22px 16px;
         border-radius: 12px;
     }
@@ -765,12 +769,12 @@ button:hover {
     }
     
     .restart-game .text {
-        font-size: 18px;   /* Larger text */
+        font-size: 18px;  
     }
     
     .restart-game .btn-reset-game,
     .restart-game .btn-main-menu-game {
-        width: 55px;       /* Slightly larger buttons */
+        width: 55px;     
         height: 55px;
         border-radius: 8px;
         font-size: 11px;
@@ -782,51 +786,130 @@ button:hover {
 }
 
 /* =========================
-   RESPONSIVE DESIGN - LANDSCAPE ORIENTATION
+   RESPONSIVE DESIGN - LANDSCAPE ORIENTATION - FIXED
    ========================= */
-/* Landscape Orientation for Mobile */
+/* Landscape Orientation for Mobile - Fixed height calculation */
 @media (max-height: 500px) and (orientation: landscape) {
-    /* Game container adjustments for landscape */
+    /* Adjust body padding for landscape */
+    .game-body {
+        padding: 10px 20px;
+        align-items: center;
+    }
+    
+    /* Game container adjustments for landscape - Dynamic height */
     .game-container {
-        height: calc(100vh - 80px);
-        max-height: 300px;
+        height: calc(100vh - 100px); 
+        min-height: 200px;            
+        max-height: 280px;            
+        width: 100%;
     }
     
     /* Maintain good size for landscape - don't make too small */
     .player {
-        width: 65px;   /* Increased from 40px */
-        height: 75px;  /* Increased from 50px */
+        width: 65px; 
+        height: 75px;
         bottom: -5px;
     }
     
-    /* Jump height for landscape mode */
+    /* Jump height for landscape mode - Proportional to container */
     @keyframes jump {
         0% { bottom: -5px; }
-        25% { bottom: 100px; }  /* Increased from 70px */
-        50% { bottom: 100px; }
+        25% { bottom: 80px; } 
+        50% { bottom: 80px; }
         100% { bottom: -5px; }
     }
     
     /* Obstacles for landscape - Still visible */
     .obstacle {
-        width: 45px;   /* Increased from 28px */
-        height: 60px;  /* Increased from 38px */
+        width: 45px;   
+        height: 60px; 
         bottom: -8px;
     }
     
-    .obstacle-s { width: 50px; height: 65px; }
-    .obstacle-m { width: 60px; height: 75px; }
-    .obstacle-l { width: 70px; height: 85px; }
+    .obstacle-s { width: 40px; height: 50px; }
+    .obstacle-m { width: 50px; height: 65px; }
+    .obstacle-l { width: 55px; height: 70px; }
     
     .obstacle.obstacle2 {
-        width: 75px;   /* Increased from 40px */
-        height: 50px;  /* Increased from 30px */
+        width: 75px;   
+        height: 50px;  
         bottom: -5px;
     }
     
-    .obstacle.obstacle2.obstacle-s { width: 80px; height: 55px; }
-    .obstacle.obstacle2.obstacle-m { width: 90px; height: 65px; }
-    .obstacle.obstacle2.obstacle-l { width: 100px; height: 75px; }
+    .obstacle.obstacle2.obstacle-s { width: 70px; height: 45px; }
+    .obstacle.obstacle2.obstacle-m { width: 80px; height: 55px; }
+    .obstacle.obstacle2.obstacle-l { width: 90px; height: 65px; }
+    
+    /* Score adjustments for landscape */
+    .score-card {
+        font-size: 18px;
+        margin: 8px;
+        gap: 12px;
+    }
+    
+    .score-card span {
+        margin-right: 15px;
+        padding: 4px 8px;
+        font-size: 16px;
+    }
+}
+
+/* =========================
+   RESPONSIVE DESIGN - VERY SHORT LANDSCAPE
+   ========================= */
+/* Very short landscape screens */
+@media (max-height: 400px) and (orientation: landscape) {
+    .game-body {
+        padding: 5px 10px;
+    }
+    
+    .game-container {
+        height: calc(100vh - 60px);
+        min-height: 180px;
+        max-height: 220px;
+    }
+    
+    /* Smaller elements for very constrained height */
+    .player {
+        width: 55px;
+        height: 65px;
+        bottom: -3px;
+    }
+    
+    @keyframes jump {
+        0% { bottom: -3px; }
+        25% { bottom: 60px; }
+        50% { bottom: 60px; }
+        100% { bottom: -3px; }
+    }
+    
+    .obstacle {
+        width: 35px;
+        height: 45px;
+        bottom: -5px;
+    }
+    
+    .obstacle-s { width: 30px; height: 40px; }
+    .obstacle-m { width: 38px; height: 48px; }
+    .obstacle-l { width: 42px; height: 55px; }
+    
+    .obstacle.obstacle2 {
+        width: 60px;
+        height: 35px;
+        bottom: -3px;
+    }
+    
+    .score-card {
+        font-size: 14px;
+        margin: 5px;
+        gap: 8px;
+    }
+    
+    .score-card span {
+        padding: 2px 6px;
+        font-size: 14px;
+        margin-right: 10px;
+    }
 }
 
 /* =========================
@@ -852,8 +935,8 @@ button:hover {
     /* Tablet jump height */
     @keyframes jump {
         0% { bottom: 0; }
-        25% { bottom: 130px; }
-        50% { bottom: 130px; }
+        25% { bottom: 150px; }
+        50% { bottom: 150px; }
         100% { bottom: 0; }
     }
     
