@@ -471,7 +471,7 @@ async function initializeGame() {
         
         console.log('Game initialized successfully!');
         
-        setScore(10000);
+        setScore(0);
         
     } catch (error) {
         console.error('Error initializing game:', error);

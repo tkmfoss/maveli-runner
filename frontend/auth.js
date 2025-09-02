@@ -112,7 +112,7 @@ async function handleSignup(event) {
         await Swal.fire({
             icon: 'success',
             title: 'Signup Successful!',
-            text: `Welcome ${user.email}`,
+            text: `Please verify your email from the mail to login`,
             confirmButtonText: 'Continue',
             timer: 3000,
             timerProgressBar: true
