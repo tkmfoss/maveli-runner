@@ -1580,7 +1580,6 @@ button:focus-visible {
     
     /* Touch instruction for landscape mobile */
     .game-container::before {
-        content: "TAP TO JUMP";
         position: absolute;
         top: var(--space-10);
         left: 50%;
