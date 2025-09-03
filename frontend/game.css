@@ -1,3 +1,748 @@
+:root {
+  /* Primitive Color Tokens */
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-cream-50: rgba(252, 252, 249, 1);
+  --color-cream-100: rgba(255, 255, 253, 1);
+  --color-gray-200: rgba(245, 245, 245, 1);
+  --color-gray-300: rgba(167, 169, 169, 1);
+  --color-gray-400: rgba(119, 124, 124, 1);
+  --color-slate-500: rgba(98, 108, 113, 1);
+  --color-brown-600: rgba(94, 82, 64, 1);
+  --color-charcoal-700: rgba(31, 33, 33, 1);
+  --color-charcoal-800: rgba(38, 40, 40, 1);
+  --color-slate-900: rgba(19, 52, 59, 1);
+  --color-teal-300: rgba(50, 184, 198, 1);
+  --color-teal-400: rgba(45, 166, 178, 1);
+  --color-teal-500: rgba(33, 128, 141, 1);
+  --color-teal-600: rgba(29, 116, 128, 1);
+  --color-teal-700: rgba(26, 104, 115, 1);
+  --color-teal-800: rgba(41, 150, 161, 1);
+  --color-red-400: rgba(255, 84, 89, 1);
+  --color-red-500: rgba(192, 21, 47, 1);
+  --color-orange-400: rgba(230, 129, 97, 1);
+  --color-orange-500: rgba(168, 75, 47, 1);
+
+  /* RGB versions for opacity control */
+  --color-brown-600-rgb: 94, 82, 64;
+  --color-teal-500-rgb: 33, 128, 141;
+  --color-slate-900-rgb: 19, 52, 59;
+  --color-slate-500-rgb: 98, 108, 113;
+  --color-red-500-rgb: 192, 21, 47;
+  --color-red-400-rgb: 255, 84, 89;
+  --color-orange-500-rgb: 168, 75, 47;
+  --color-orange-400-rgb: 230, 129, 97;
+
+  /* Background color tokens (Light Mode) */
+  --color-bg-1: rgba(59, 130, 246, 0.08); /* Light blue */
+  --color-bg-2: rgba(245, 158, 11, 0.08); /* Light yellow */
+  --color-bg-3: rgba(34, 197, 94, 0.08); /* Light green */
+  --color-bg-4: rgba(239, 68, 68, 0.08); /* Light red */
+  --color-bg-5: rgba(147, 51, 234, 0.08); /* Light purple */
+  --color-bg-6: rgba(249, 115, 22, 0.08); /* Light orange */
+  --color-bg-7: rgba(236, 72, 153, 0.08); /* Light pink */
+  --color-bg-8: rgba(6, 182, 212, 0.08); /* Light cyan */
+
+  /* Semantic Color Tokens (Light Mode) */
+  --color-background: var(--color-cream-50);
+  --color-surface: var(--color-cream-100);
+  --color-text: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-500);
+  --color-primary: var(--color-teal-500);
+  --color-primary-hover: var(--color-teal-600);
+  --color-primary-active: var(--color-teal-700);
+  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-btn-primary-text: var(--color-cream-50);
+  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-error: var(--color-red-500);
+  --color-success: var(--color-teal-500);
+  --color-warning: var(--color-orange-500);
+  --color-info: var(--color-slate-500);
+  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+  --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+
+  /* Common style patterns */
+  --focus-ring: 0 0 0 3px var(--color-focus-ring);
+  --focus-outline: 2px solid var(--color-primary);
+  --status-bg-opacity: 0.15;
+  --status-border-opacity: 0.25;
+  --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+  /* RGB versions for opacity control */
+  --color-success-rgb: 33, 128, 141;
+  --color-error-rgb: 192, 21, 47;
+  --color-warning-rgb: 168, 75, 47;
+  --color-info-rgb: 98, 108, 113;
+
+  /* Typography */
+  
+  --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono: "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, monospace;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 30px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 550;
+  --font-weight-bold: 600;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --letter-spacing-tight: -0.01em;
+
+  /* Spacing */
+  --space-0: 0;
+  --space-1: 1px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-base: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04),
+    0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04),
+    0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+
+  /* Animation */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+}
+@font-face {
+    font-family: Minecraft;
+    src: url('./assets/Minecraft.ttf');
+}
+/* Dark mode colors */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* RGB versions for opacity control (Dark Mode) */
+    --color-gray-400-rgb: 119, 124, 124;
+    --color-teal-300-rgb: 50, 184, 198;
+    --color-gray-300-rgb: 167, 169, 169;
+    --color-gray-200-rgb: 245, 245, 245;
+
+    /* Background color tokens (Dark Mode) */
+    --color-bg-1: rgba(29, 78, 216, 0.15); /* Dark blue */
+    --color-bg-2: rgba(180, 83, 9, 0.15); /* Dark yellow */
+    --color-bg-3: rgba(21, 128, 61, 0.15); /* Dark green */
+    --color-bg-4: rgba(185, 28, 28, 0.15); /* Dark red */
+    --color-bg-5: rgba(107, 33, 168, 0.15); /* Dark purple */
+    --color-bg-6: rgba(194, 65, 12, 0.15); /* Dark orange */
+    --color-bg-7: rgba(190, 24, 93, 0.15); /* Dark pink */
+    --color-bg-8: rgba(8, 145, 178, 0.15); /* Dark cyan */
+    
+    /* Semantic Color Tokens (Dark Mode) */
+    --color-background: var(--color-charcoal-700);
+    --color-surface: var(--color-charcoal-800);
+    --color-text: var(--color-gray-200);
+    --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+    --color-primary: var(--color-teal-300);
+    --color-primary-hover: var(--color-teal-400);
+    --color-primary-active: var(--color-teal-800);
+    --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+    --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+    --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-error: var(--color-red-400);
+    --color-success: var(--color-teal-300);
+    --color-warning: var(--color-orange-400);
+    --color-info: var(--color-gray-300);
+    --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+    --color-btn-primary-text: var(--color-slate-900);
+    --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+    --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+    --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    --button-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+    --color-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+    --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
+
+    /* Common style patterns - updated for dark mode */
+    --focus-ring: 0 0 0 3px var(--color-focus-ring);
+    --focus-outline: 2px solid var(--color-primary);
+    --status-bg-opacity: 0.15;
+    --status-border-opacity: 0.25;
+    --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+    /* RGB versions for dark mode */
+    --color-success-rgb: var(--color-teal-300-rgb);
+    --color-error-rgb: var(--color-red-400-rgb);
+    --color-warning-rgb: var(--color-orange-400-rgb);
+    --color-info-rgb: var(--color-gray-300-rgb);
+  }
+}
+
+/* Data attribute for manual theme switching */
+[data-color-scheme="dark"] {
+  /* RGB versions for opacity control (dark mode) */
+  --color-gray-400-rgb: 119, 124, 124;
+  --color-teal-300-rgb: 50, 184, 198;
+  --color-gray-300-rgb: 167, 169, 169;
+  --color-gray-200-rgb: 245, 245, 245;
+
+  /* Colorful background palette - Dark Mode */
+  --color-bg-1: rgba(29, 78, 216, 0.15); /* Dark blue */
+  --color-bg-2: rgba(180, 83, 9, 0.15); /* Dark yellow */
+  --color-bg-3: rgba(21, 128, 61, 0.15); /* Dark green */
+  --color-bg-4: rgba(185, 28, 28, 0.15); /* Dark red */
+  --color-bg-5: rgba(107, 33, 168, 0.15); /* Dark purple */
+  --color-bg-6: rgba(194, 65, 12, 0.15); /* Dark orange */
+  --color-bg-7: rgba(190, 24, 93, 0.15); /* Dark pink */
+  --color-bg-8: rgba(8, 145, 178, 0.15); /* Dark cyan */
+  
+  /* Semantic Color Tokens (Dark Mode) */
+  --color-background: var(--color-charcoal-700);
+  --color-surface: var(--color-charcoal-800);
+  --color-text: var(--color-gray-200);
+  --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+  --color-primary: var(--color-teal-300);
+  --color-primary-hover: var(--color-teal-400);
+  --color-primary-active: var(--color-teal-800);
+  --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+  --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+  --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+  --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+  --color-error: var(--color-red-400);
+  --color-success: var(--color-teal-300);
+  --color-warning: var(--color-orange-400);
+  --color-info: var(--color-gray-300);
+  --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+  --color-btn-primary-text: var(--color-slate-900);
+  --color-card-border: rgba(var(--color-gray-400-rgb), 0.15);
+  --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+  --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  --color-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+  --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
+
+  /* Common style patterns - updated for dark mode */
+  --focus-ring: 0 0 0 3px var(--color-focus-ring);
+  --focus-outline: 2px solid var(--color-primary);
+  --status-bg-opacity: 0.15;
+  --status-border-opacity: 0.25;
+  --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+  /* RGB versions for dark mode */
+  --color-success-rgb: var(--color-teal-300-rgb);
+  --color-error-rgb: var(--color-red-400-rgb);
+  --color-warning-rgb: var(--color-orange-400-rgb);
+  --color-info-rgb: var(--color-gray-300-rgb);
+}
+
+[data-color-scheme="light"] {
+  /* RGB versions for opacity control (light mode) */
+  --color-brown-600-rgb: 94, 82, 64;
+  --color-teal-500-rgb: 33, 128, 141;
+  --color-slate-900-rgb: 19, 52, 59;
+  
+  /* Semantic Color Tokens (Light Mode) */
+  --color-background: var(--color-cream-50);
+  --color-surface: var(--color-cream-100);
+  --color-text: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-500);
+  --color-primary: var(--color-teal-500);
+  --color-primary-hover: var(--color-teal-600);
+  --color-primary-active: var(--color-teal-700);
+  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-btn-primary-text: var(--color-cream-50);
+  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-error: var(--color-red-500);
+  --color-success: var(--color-teal-500);
+  --color-warning: var(--color-orange-500);
+  --color-info: var(--color-slate-500);
+  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+
+  /* RGB versions for light mode */
+  --color-success-rgb: var(--color-teal-500-rgb);
+  --color-error-rgb: var(--color-red-500-rgb);
+  --color-warning-rgb: var(--color-orange-500-rgb);
+  --color-info-rgb: var(--color-slate-500-rgb);
+}
+
+/* Base styles */
+html {
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+h2 {
+  font-size: var(--font-size-3xl);
+}
+h3 {
+  font-size: var(--font-size-2xl);
+}
+h4 {
+  font-size: var(--font-size-xl);
+}
+h5 {
+  font-size: var(--font-size-lg);
+}
+h6 {
+  font-size: var(--font-size-md);
+}
+
+p {
+  margin: 0 0 var(--space-16) 0;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+code,
+pre {
+  font-family: var(--font-family-mono);
+  font-size: calc(var(--font-size-base) * 0.95);
+  background-color: var(--color-secondary);
+  border-radius: var(--radius-sm);
+}
+
+code {
+  padding: var(--space-1) var(--space-4);
+}
+
+pre {
+  padding: var(--space-16);
+  margin: var(--space-16) 0;
+  overflow: auto;
+  border: 1px solid var(--color-border);
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+  border: none;
+  text-decoration: none;
+  position: relative;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-btn-primary-text);
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn--primary:active {
+  background: var(--color-primary-active);
+}
+
+.btn--secondary {
+  background: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.btn--secondary:hover {
+  background: var(--color-secondary-hover);
+}
+
+.btn--secondary:active {
+  background: var(--color-secondary-active);
+}
+
+.btn--outline {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.btn--outline:hover {
+  background: var(--color-secondary);
+}
+
+.btn--sm {
+  padding: var(--space-4) var(--space-12);
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-sm);
+}
+
+.btn--lg {
+  padding: var(--space-10) var(--space-20);
+  font-size: var(--font-size-lg);
+  border-radius: var(--radius-md);
+}
+
+.btn--full-width {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Form elements */
+.form-control {
+  display: block;
+  width: 100%;
+  padding: var(--space-8) var(--space-12);
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+textarea.form-control {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+}
+
+select.form-control {
+  padding: var(--space-8) var(--space-12);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: var(--select-caret-light);
+  background-repeat: no-repeat;
+  background-position: right var(--space-12) center;
+  background-size: 16px;
+  padding-right: var(--space-32);
+}
+
+/* Add a dark mode specific caret */
+@media (prefers-color-scheme: dark) {
+  select.form-control {
+    background-image: var(--select-caret-dark);
+  }
+}
+
+/* Also handle data-color-scheme */
+[data-color-scheme="dark"] select.form-control {
+  background-image: var(--select-caret-dark);
+}
+
+[data-color-scheme="light"] select.form-control {
+  background-image: var(--select-caret-light);
+}
+
+.form-control:focus {
+  border-color: var(--color-primary);
+  outline: var(--focus-outline);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--space-8);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+}
+
+.form-group {
+  margin-bottom: var(--space-16);
+}
+
+/* Card component */
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow var(--duration-normal) var(--ease-standard);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card__body {
+  padding: var(--space-16);
+}
+
+.card__header,
+.card__footer {
+  padding: var(--space-16);
+  border-bottom: 1px solid var(--color-card-border-inner);
+}
+
+/* Status indicators - simplified with CSS variables */
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-6) var(--space-12);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+}
+
+.status--success {
+  background-color: rgba(
+    var(--color-success-rgb, 33, 128, 141),
+    var(--status-bg-opacity)
+  );
+  color: var(--color-success);
+  border: 1px solid
+    rgba(var(--color-success-rgb, 33, 128, 141), var(--status-border-opacity));
+}
+
+.status--error {
+  background-color: rgba(
+    var(--color-error-rgb, 192, 21, 47),
+    var(--status-bg-opacity)
+  );
+  color: var(--color-error);
+  border: 1px solid
+    rgba(var(--color-error-rgb, 192, 21, 47), var(--status-border-opacity));
+}
+
+.status--warning {
+  background-color: rgba(
+    var(--color-warning-rgb, 168, 75, 47),
+    var(--status-bg-opacity)
+  );
+  color: var(--color-warning);
+  border: 1px solid
+    rgba(var(--color-warning-rgb, 168, 75, 47), var(--status-border-opacity));
+}
+
+.status--info {
+  background-color: rgba(
+    var(--color-info-rgb, 98, 108, 113),
+    var(--status-bg-opacity)
+  );
+  color: var(--color-info);
+  border: 1px solid
+    rgba(var(--color-info-rgb, 98, 108, 113), var(--status-border-opacity));
+}
+
+/* Container layout */
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--space-16);
+  padding-left: var(--space-16);
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: var(--container-sm);
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: var(--container-md);
+  }
+}
+@media (min-width: 1024px) {
+  .container {
+    max-width: var(--container-lg);
+  }
+}
+@media (min-width: 1280px) {
+  .container {
+    max-width: var(--container-xl);
+  }
+}
+
+/* Utility classes */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.gap-4 {
+  gap: var(--space-4);
+}
+.gap-8 {
+  gap: var(--space-8);
+}
+.gap-16 {
+  gap: var(--space-16);
+}
+
+.m-0 {
+  margin: 0;
+}
+.mt-8 {
+  margin-top: var(--space-8);
+}
+.mb-8 {
+  margin-bottom: var(--space-8);
+}
+.mx-8 {
+  margin-left: var(--space-8);
+  margin-right: var(--space-8);
+}
+.my-8 {
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+.p-0 {
+  padding: 0;
+}
+.py-8 {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
+}
+.px-8 {
+  padding-left: var(--space-8);
+  padding-right: var(--space-8);
+}
+.py-16 {
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-16);
+}
+.px-16 {
+  padding-left: var(--space-16);
+  padding-right: var(--space-16);
+}
+
+.block {
+  display: block;
+}
+.hidden {
+  display: none;
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Dark mode specifics */
+[data-color-scheme="dark"] .btn--outline {
+  border: 1px solid var(--color-border-secondary);
+}
+
+@font-face {
+  font-family: 'FKGroteskNeue';
+  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
+    format('woff2');
+}
+
+/* END PERPLEXITY DESIGN SYSTEM */
+```css
 /* =========================
    FONT IMPORTS
    ========================= */
@@ -11,13 +756,13 @@
    ========================= */
 .game-body {
     margin: 0;
-    padding: 40px 20px 20px 20px;
-    background: linear-gradient(135deg, #87CEEB, #98FB98);
+    padding: var(--space-32) var(--space-20) var(--space-20) var(--space-20);
+    background: linear-gradient(135deg, var(--color-teal-300), var(--color-bg-3));
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    font-family: Arial, sans-serif;
+    font-family: var(--font-family-base);
     box-sizing: border-box;
 }
 
@@ -28,29 +773,29 @@
     width: 100%;
     height: 300px;
     margin: 0;
-    border: 1px solid;
+    border: 1px solid var(--color-border);
     position: relative;
     overflow: hidden;
     background-image: url('./assets/background1.png');
     background-size: cover;
     background-position: center;
     box-sizing: border-box;
-    transition: background-image 0.5s ease-in-out;
-    cursor: pointer; /* Indicates touch/click interaction */
-    /* Hide game content initially */
+    transition: background-image var(--duration-normal) var(--ease-standard);
+    cursor: pointer;
     opacity: 0;
-    transition: opacity 0.5s ease-in, background-image 0.5s ease-in-out;
+    transition: opacity var(--duration-normal) var(--ease-standard), background-image var(--duration-normal) var(--ease-standard);
+    border-radius: var(--radius-base);
+    box-shadow: var(--shadow-md);
 }
 
 .game-container.ready {
     opacity: 1;
 }
 
-/* Game container stopped state */
 .game-container.stop {
     animation-play-state: paused;
-    cursor: default; /* Remove pointer when game stopped */
-    pointer-events: none; /* Disable touch events on game container when stopped */
+    cursor: default;
+    pointer-events: none;
 }
 
 /* =========================
@@ -65,18 +810,15 @@
     background-image: url('./assets/runningmaveli.gif');
     background-size: cover;
     background-position: center;
-    /* Ensure stable positioning */
     z-index: 10;
 }
 
-/* Player jumping state */
 .player.jump {
     animation: jump 1.2s infinite;
     background-image: url('./assets/normalmaveli.png');
     background-size: cover;
 }
 
-/* Player stopped state */
 .player.stop {
     background-image: url('./assets/normalmaveli.png');
     background-size: cover;
@@ -90,19 +832,14 @@
     height: 50px;
     position: absolute;
     bottom: -11px;
-    left: 100%; /* Start at 100% (off-screen) */
-    /* REMOVED: animation: move 4s linear infinite; */
-    /* Animation will be added via JavaScript when game starts */
+    left: 100%;
     background-image: url('./assets/obstacle3.webp');
     background-size: cover;
     background-position: center;
     clip-path: polygon(20% 0%, 80% 20%, 100% 100%, 0% 100%);
-    /* Removed transition to prevent visual glitches */
-    /* Ensure stable positioning */
     z-index: 5;
 }
 
-/* Obstacle stopped state - basic */
 .obstacle.stop {
     animation-play-state: paused;
 }
@@ -114,12 +851,10 @@
     width: 40px; 
     height: 55px; 
 }
-
 .obstacle-m { 
     width: 50px; 
     height: 65px; 
 }
-
 .obstacle-l { 
     width: 60px; 
     height: 75px; 
@@ -133,15 +868,13 @@
     height: 20px;
     position: absolute;
     bottom: -20px;
-    left: 100%; /* Start at 100% (off-screen) */
+    left: 100%;
     background-image: url('./assets/obstacle2.webp');
     background-size: cover;
     background-position: center;
     clip-path: polygon(20% 0%, 80% 20%, 100% 100%, 0% 100%);
-    /* Removed transition to prevent visual glitches */
 }
 
-/* Obstacle2 when applied to main obstacle class */
 .obstacle.obstacle2 {
     width: 80px;
     height: 20px;
@@ -149,32 +882,27 @@
     background-image: url('./assets/obstacle2.webp');
 }
 
-/* Obstacle2 size variations */
 .obstacle.obstacle2.obstacle-s { 
     width: 75px; 
     height: 45px; 
 }
-
 .obstacle.obstacle2.obstacle-m { 
     width: 85px; 
     height: 45px; 
 }
-
 .obstacle.obstacle2.obstacle-l { 
     width: 95px; 
     height: 45px; 
 }
 
 /* =========================
-   ENHANCED STOP STATES - COLLISION FIX
+   ENHANCED STOP STATES
    ========================= */
-/* Enhanced stop states with higher CSS specificity */
 .obstacle.stop,
 .obstacle.obstacle2.stop {
     animation-play-state: paused !important;
 }
 
-/* Alternative approach - completely remove animation when game is stopped */
 .game-container.stop .obstacle {
     animation: none !important;
     animation-play-state: paused !important;
@@ -184,91 +912,79 @@
    SCORE DISPLAY
    ========================= */
 .score-card {
-    font-family: Minecraft;
-    font-size: 18px;
-    margin: 10px;
+    font-family: Minecraft, var(--font-family-base);
+    font-size: var(--font-size-xl);
+    margin: var(--space-10);
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: var(--space-10);
+    color: var(--color-text);
 }
 
 .score-card span {
-    margin-right: 15px;
+    margin-right: var(--space-16);
 }
 
 /* =========================
    GAME OVER / RESTART MODAL
    ========================= */
 .restart-game {
-    /* Initial hidden state */
     visibility: hidden;
     opacity: 0;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -60%) scale(0.9);
-    
-    /* Modal dimensions */
     min-width: 280px;
     min-height: 180px;
     width: auto;
     max-width: 90vw;
     max-height: 85vh;
-    padding: 28px 22px;
-    
-    /* Modal styling */
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 16px;
-    box-shadow: 0 14px 48px rgba(0, 0, 0, 0.25);
-    
-    /* Layout */
+    padding: var(--space-24) var(--space-20);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
-    /* Typography */
-    font-family: Minecraft, Arial, sans-serif;
-    font-size: 24px;
-    color: #2e7d32; /* Deep green */
-    
-    /* Layering and transitions */
+    font-family: Minecraft, var(--font-family-base);
+    font-size: var(--font-size-3xl);
+    color: var(--color-text);
     z-index: 2500;
-    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s;
-    pointer-events: none; /* Disable pointer events when hidden */
+    transition: opacity var(--duration-normal) var(--ease-standard), transform var(--duration-normal) var(--ease-standard), visibility 0s linear var(--duration-normal);
+    pointer-events: none;
 }
 
-/* Modal visible state */
 .restart-game.show {
     visibility: visible;
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
     transition-delay: 0s;
-    pointer-events: auto; /* Enable pointer events when shown */
+    pointer-events: auto;
 }
 
-/* Modal content wrapper */
 .restart-game .content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: var(--space-20);
     width: 100%;
     text-align: center;
 }
 
-/* Modal text styling */
 .restart-game .text {
-    font-size: 20px;
-    font-weight: 700;
+    font-family: Minecraft;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    margin-bottom: 10px;
+    margin-bottom: var(--space-10);
 }
 
-/* Modal buttons container */
 .restart-game .buttons {
     display: flex;
-    gap: 15px;
+    gap: var(--space-16);
     align-items: center;
     justify-content: center;
 }
@@ -278,45 +994,32 @@
    ========================= */
 .restart-game .btn-reset-game,
 .restart-game .btn-main-menu-game {
-    /* Reset default button styles */
     border: none;
     margin: 0;
-    padding: 5px;
-    
-    /* Button dimensions */
+    padding: var(--space-6);
     display: inline-flex;
     width: 60px;
     height: 60px;
-    
-    /* Button styling */
-    background-color: #e6f4ea; /* Subtle pastel green */
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(44, 123, 93, 0.2);
+    background-color: var(--color-secondary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
     cursor: pointer;
-    
-    /* Button layout */
     align-items: center;
     justify-content: center;
-    
-    /* Button typography */
-    font-family: Minecraft, Arial, sans-serif;
-    font-size: 12px;
-    font-weight: bold;
-    color: #2e7d32;
+    font-family: Minecraft, var(--font-family-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
     text-align: center;
-    
-    /* Button behavior */
     position: relative;
     z-index: 2600;
     pointer-events: auto;
     touch-action: manipulation;
     -webkit-tap-highlight-color: rgba(0,0,0,0.1);
-    
-    /* Transitions */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    transition: background-color var(--duration-normal) var(--ease-standard), box-shadow var(--duration-normal) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+    border: 1px solid var(--color-border);
 }
 
-/* Button text content */
 .restart-game .btn-reset-game::after {
     content: "Restart";
     white-space: pre;
@@ -329,35 +1032,31 @@
     line-height: 1.2;
 }
 
-/* Button hover and focus states */
 .restart-game .btn-reset-game:hover,
 .restart-game .btn-main-menu-game:hover,
 .restart-game .btn-reset-game:focus,
 .restart-game .btn-main-menu-game:focus {
-    background-color: #cde8cc;
-    box-shadow: 0 6px 18px rgba(44, 123, 93, 0.35);
+    background-color: var(--color-secondary-hover);
+    box-shadow: var(--shadow-md);
     transform: scale(1.05);
     outline: none;
 }
 
-/* Focus state for accessibility */
 .restart-game .btn-reset-game:focus-visible,
 .restart-game .btn-main-menu-game:focus-visible {
-    outline: 3px solid #66bb6a;
+    box-shadow: var(--focus-ring);
     outline-offset: 3px;
 }
 
-/* Touch feedback for mobile devices */
 .restart-game .btn-reset-game:active,
 .restart-game .btn-main-menu-game:active {
     transform: scale(0.95);
-    background-color: #b8d4b7;
+    background-color: var(--color-secondary-active);
 }
 
 /* =========================
-   GENERAL MODAL STYLES (AUTH/LOGIN)
+   GENERAL MODAL STYLES
    ========================= */
-/* Modal overlay */
 .modal {
     display: none;
     position: fixed;
@@ -365,7 +1064,7 @@
     left: 0;
     width: 100%; 
     height: 100%;
-    background: rgba(0,0,0,0.4);
+    background: rgba(var(--color-slate-900-rgb), 0.4);
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -375,75 +1074,93 @@
     display: flex;
 }
 
-/* Modal content */
 .modal-content {
-    background: white;
-    color: black;
-    padding: 20px;
-    border-radius: 8px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    padding: var(--space-20);
+    border-radius: var(--radius-base);
     width: 300px;
     text-align: center;
-    text-decoration-color: #0056b3;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-lg);
     position: relative;
+    border: 1px solid var(--color-border);
 }
 
 /* =========================
    FORM ELEMENTS
    ========================= */
-/* Input fields */
 input {
     width: 100%;
-    margin: 8px 0;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    margin: var(--space-8) 0;
+    padding: var(--space-8) var(--space-12);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-base);
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-base);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    transition: border-color var(--duration-fast) var(--ease-standard);
 }
 
-/* General buttons */
+input:focus {
+    border-color: var(--color-primary);
+    outline: var(--focus-outline);
+}
+
 button {
     width: 100%;
-    padding: 10px;
-    background: #007BFF;
-    color: white;
+    padding: var(--space-10) var(--space-16);
+    background: var(--color-primary);
+    color: var(--color-btn-primary-text);
     border: none;
-    border-radius: 4px;
+    border-radius: var(--radius-base);
     cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-family-base);
+    transition: background-color var(--duration-fast) var(--ease-standard);
 }
 
 button:hover {
-    background: #0056b3;
+    background: var(--color-primary-hover);
 }
 
-/* Modal close button */
+button:focus-visible {
+    box-shadow: var(--focus-ring);
+    outline: none;
+}
+
 .close-btn {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
+    top: var(--space-10);
+    right: var(--space-16);
+    font-size: var(--font-size-3xl);
     cursor: pointer;
-    color: #555;
+    color: var(--color-text-secondary);
     user-select: none;
-    transition: color 0.3s ease;
+    transition: color var(--duration-normal) var(--ease-standard);
 }
 
-/* Switch/toggle text */
+.close-btn:hover {
+    color: var(--color-text);
+}
+
 .switch {
-    margin-top: 15px;
-    font-size: 14px;
-    color: #007BFF;
+    margin-top: var(--space-16);
+    font-size: var(--font-size-base);
+    color: var(--color-primary);
     cursor: pointer;
     text-decoration: underline;
+}
+
+.switch:hover {
+    color: var(--color-primary-hover);
 }
 
 /* =========================
    GAME ANIMATIONS
    ========================= */
-/* Player jump animation */
 @keyframes jump {
     0% {
         bottom: 0;
@@ -459,7 +1176,6 @@ button:hover {
     }
 }
 
-/* Obstacle movement animation */
 @keyframes move {
     0% {
         left: 100%;
@@ -469,44 +1185,9 @@ button:hover {
     }
 }
 
-/* Fade in/out animation for touch instructions */
 @keyframes fadeInOut {
     0%, 100% { opacity: 0; }
     20%, 80% { opacity: 1; }
-}
-
-/* =========================
-   MOBILE TOUCH ENHANCEMENTS
-   ========================= */
-/* Touch-friendly styles for mobile devices */
-@media (hover: none) and (pointer: coarse) {
-    .game-container {
-        -webkit-user-select: none;
-        -webkit-touch-callout: none;
-        -webkit-tap-highlight-color: rgba(0,0,0,0.1);
-        touch-action: manipulation;
-    }
-    
-    /* Touch instruction overlay (appears on mobile) */
-    .game-container::before {
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0,0,0,0.7);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: bold;
-        z-index: 10;
-        animation: fadeInOut 3s ease-in-out;
-    }
-    
-    /* Hide touch instructions when game is stopped */
-    .game-container.stop::before {
-        display: none;
-    }
 }
 
 /* =========================
@@ -518,13 +1199,13 @@ button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-teal-700) 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    transition: opacity 0.5s ease-out;
+    transition: opacity var(--duration-normal) var(--ease-standard);
 }
 
 .loading-screen.fade-out {
@@ -534,19 +1215,19 @@ button:hover {
 
 .loading-content {
     text-align: center;
-    color: white;
+    color: var(--color-btn-primary-text);
 }
 
 .loading-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-20);
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .loading-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-32);
     opacity: 0.9;
 }
 
@@ -554,34 +1235,34 @@ button:hover {
     width: 60px;
     height: 60px;
     border: 4px solid rgba(255,255,255,0.3);
-    border-left: 4px solid white;
+    border-left: 4px solid var(--color-btn-primary-text);
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
+    margin: 0 auto var(--space-20);
 }
 
 .loading-progress {
     width: 250px;
     height: 6px;
     background: rgba(255,255,255,0.3);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     overflow: hidden;
-    margin: 20px auto;
+    margin: var(--space-20) auto;
 }
 
 .loading-progress-bar {
     width: 0%;
     height: 100%;
-    background: white;
-    border-radius: 3px;
-    transition: width 0.3s ease;
+    background: var(--color-btn-primary-text);
+    border-radius: var(--radius-sm);
+    transition: width var(--duration-normal) var(--ease-standard);
     animation: progressGlow 2s ease-in-out infinite alternate;
 }
 
 .loading-text {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
     opacity: 0.8;
-    margin-top: 15px;
+    margin-top: var(--space-16);
 }
 
 @keyframes spin {
@@ -595,261 +1276,327 @@ button:hover {
 }
 
 /* =========================
-   RESPONSIVE DESIGN - MOBILE DEVICES
+   MOBILE LANDSCAPE-ONLY OPTIMIZATION - ENHANCED
    ========================= */
-/* Mobile Devices (max-width: 767px) */
-@media (max-width: 767px) {
-    /* Game container adjustments - Made taller for better gameplay */
-    .game-container {
-        width: 100vw;
-        height: 50vh;
-        min-height: 300px;
-        max-height: 400px;
-        margin: 0;
-        border: 2px solid;
-        border-radius: 8px;
-    }
-    
-    /* Player character scaling - SIGNIFICANTLY LARGER */
-    .player {
-        width: 80px;   
-        height: 95px; 
-        left: 12%;
-        bottom: -5px;  
-    }
-    
-    /* Adjusted jump animation for mobile - Higher jump for larger player */
-    @keyframes jump {
-        0% { bottom: -5px; }
-        25% { bottom: 140px; }   
-        50% { bottom: 140px; }
-        100% { bottom: -5px; }
-    }
-    
-    /* Obstacle scaling - SIGNIFICANTLY LARGER */
-    .obstacle {
-        width: 30px;   
-        height: 45px; 
-        bottom: -8px;  
-    }
-    
-    /* Obstacle size variations for mobile - All increased */
-    .obstacle-s { 
-        width: 20px; 
-        height: 35px; 
-    }
-    .obstacle-m { 
-        width: 30px; 
-        height: 45px;  
-    }
-    .obstacle-l { 
-        width: 40px;   
-        height: 65px; 
-    }
-    
-    /* Obstacle2 scaling - SIGNIFICANTLY LARGER */
-    .obstacle.obstacle2 {
-        width: 75px;   
-        height: 45px;  
-        bottom: -5px;  
-    }
-    
-    .obstacle.obstacle2.obstacle-s { 
-        width: 65px;   
-        height: 35px; 
-    }
-    .obstacle.obstacle2.obstacle-m { 
-        width: 75px; 
-        height: 45px; 
-    }
-    .obstacle.obstacle2.obstacle-l { 
-        width: 80px;  
-        height: 55px;  
-    }
-    
-    /* Score display adjustments - Made larger and more visible */
-    .score-card {
-        font-size: 22px;   
-        margin: 15px;      
-        gap: 20px;         
-    }
-    
-    .score-card span {
-        margin-right: 25px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        font-weight: bold;
-        padding: 8px 12px;                 
-        background: rgba(255,255,255,0.2);  
-        border-radius: 8px;                   
-        backdrop-filter: blur(5px);           
-    }
+/* Force landscape orientation message for mobile devices */
+.orientation-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-teal-700) 100%);
+    color: var(--color-btn-primary-text);
+    z-index: 10000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-20);
+    box-sizing: border-box;
+    font-family: var(--font-family-base);
+}
+
+.orientation-message .icon {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-20);
+    animation: rotate 2s ease-in-out infinite;
+}
+
+.orientation-message h2 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-20);
+    font-weight: var(--font-weight-bold);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.orientation-message p {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-normal);
+    max-width: 80%;
+    opacity: 0.9;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(90deg); }
+    100% { transform: rotate(0deg); }
 }
 
 /* =========================
-   RESPONSIVE DESIGN - EXTRA SMALL DEVICES
+   RESPONSIVE DESIGN - MOBILE PORTRAIT (480px)
    ========================= */
-/* Extra Small Devices (max-width: 480px) */
 @media (max-width: 480px) {
-    /* Game container for very small screens - Even taller */
-    .game-container {
-        width: 100%;
-        height: 45vh;
-        min-height: 280px;
-        max-height: 350px;
-        margin: 20px 0 0 0;
-        border: 2px solid;
+    .game-body {
+        padding: var(--space-16) var(--space-8);
+        align-items: center;
     }
     
-    /* Player size for small screens - Still large and visible */
+    .game-container {
+        width: 100%;
+        height: 200px;
+        min-height: 150px;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-base);
+        margin: 0;
+    }
+    
     .player {
-        width: 75px;   
-        height: 90px;
+        width: 40px;
+        height: 50px;
         left: 10%;
         bottom: -5px;
     }
     
-    /* Jump height for small screens */
     @keyframes jump {
         0% { bottom: -5px; }
-        25% { bottom: 120px; }   
-        50% { bottom: 120px; }
+        25% { bottom: 60px; }
+        50% { bottom: 60px; }
         100% { bottom: -5px; }
     }
     
-    /* Obstacle sizes for small screens - Still clearly visible */
     .obstacle {
-        width: 25px;   
-        height: 50px;  
-        bottom: -8px;
+        width: 25px;
+        height: 35px;
+        bottom: -6px;
     }
     
-    .obstacle-s { width: 25px; height: 40px; }  
-    .obstacle-m { width: 25px; height: 45px; }
-    .obstacle-l { width: 30px; height: 50px; }
+    .obstacle-s { 
+        width: 22px; 
+        height: 32px; 
+    }
+    
+    .obstacle-m { 
+        width: 28px; 
+        height: 38px; 
+    }
+    
+    .obstacle-l { 
+        width: 32px; 
+        height: 42px; 
+    }
     
     .obstacle.obstacle2 {
-        width: 55px;   
-        height: 35px;  
-        bottom: -5px;
+        width: 45px;
+        height: 25px;
+        bottom: -3px;
     }
     
-    .obstacle.obstacle2.obstacle-s { width: 55px; height: 30px; }
-    .obstacle.obstacle2.obstacle-m { width: 65px; height: 40px; }
-    .obstacle.obstacle2.obstacle-l { width: 75px; height: 40px; }
-    
-    /* Score display for small screens - Still prominent */
     .score-card {
-        font-size: 20px;  
-        margin: 12px;
-        gap: 15px;
+        font-size: var(--font-size-sm);
+        margin: var(--space-6);
+        gap: var(--space-6);
+        flex-direction: column;
+        align-items: center;
     }
     
     .score-card span {
-        margin-right: 20px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        font-weight: bold;
-        padding: 6px 10px;
-        background: rgba(255,255,255,0.2);
-        border-radius: 6px;
-        backdrop-filter: blur(5px);
+        margin-right: 0;
+        text-align: center;
+        background: rgba(var(--color-brown-600-rgb), 0.1);
+        padding: var(--space-4) var(--space-8);
+        border-radius: var(--radius-base);
+        font-size: var(--font-size-sm);
     }
     
-    /* Restart modal adjustments for small screens */
     .restart-game {
-        min-width: 260px;  
-        min-height: 160px;
-        font-size: 20px;   
-        padding: 22px 16px;
-        border-radius: 12px;
-    }
-    
-    .restart-game .content {
-        gap: 18px;
+        min-width: 240px;
+        min-height: 140px;
+        font-size: var(--font-size-lg);
+        padding: var(--space-16);
+        border-radius: var(--radius-base);
     }
     
     .restart-game .text {
-        font-size: 18px;  
+        font-size: var(--font-size-base);
     }
     
     .restart-game .btn-reset-game,
     .restart-game .btn-main-menu-game {
-        width: 55px;     
-        height: 55px;
-        border-radius: 8px;
-        font-size: 11px;
+        width: 45px;
+        height: 45px;
+        font-size: var(--font-size-xs);
     }
     
-    .restart-game .buttons {
-        gap: 15px;
+    .orientation-message {
+        display: flex;
+    }
+    
+    .orientation-message h2 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .orientation-message p {
+        font-size: var(--font-size-base);
     }
 }
 
 /* =========================
-   RESPONSIVE DESIGN - LANDSCAPE ORIENTATION - FIXED
+   MOBILE LANDSCAPE MODE (OPTIMIZED)
    ========================= */
-/* Landscape Orientation for Mobile - Fixed height calculation */
-@media (max-height: 500px) and (orientation: landscape) {
-    /* Adjust body padding for landscape */
+/* Mobile devices in landscape mode - Main game styles */
+@media (max-width: 1023px) and (orientation: landscape) {
+    .orientation-message {
+        display: none;
+    }
+    
     .game-body {
-        padding: 10px 20px;
+        padding: var(--space-6) var(--space-10);
         align-items: center;
+        min-height: 100vh;
     }
     
-    /* Game container adjustments for landscape - Dynamic height */
+    /* Game container - Optimized for landscape */
     .game-container {
-        height: calc(100vh - 100px); 
-        min-height: 200px;            
-        max-height: 280px;            
         width: 100%;
+        height: calc(100vh - 80px);
+        min-height: 200px;
+        max-height: 350px;
+        border: 2px solid var(--color-border);
+        border-radius: var(--radius-base);
+        margin: 0;
     }
     
-    /* Maintain good size for landscape - don't make too small */
+    /* Player character - Larger and more visible */
     .player {
-        width: 65px; 
-        height: 75px;
+        width: 65px;
+        height: 80px;
+        left: 12%;
         bottom: -5px;
     }
     
-    /* Jump height for landscape mode - Proportional to container */
+    /* Mobile landscape jump animation */
     @keyframes jump {
         0% { bottom: -5px; }
-        25% { bottom: 80px; } 
-        50% { bottom: 80px; }
+        25% { bottom: 90px; }
+        50% { bottom: 90px; }
         100% { bottom: -5px; }
     }
     
-    /* Obstacles for landscape - Still visible */
+    /* Obstacles - Larger and more visible */
     .obstacle {
-        width: 45px;   
-        height: 60px; 
+        width: 40px;
+        height: 55px;
         bottom: -8px;
     }
     
-    .obstacle-s { width: 40px; height: 50px; }
-    .obstacle-m { width: 50px; height: 65px; }
-    .obstacle-l { width: 55px; height: 70px; }
+    .obstacle-s { 
+        width: 35px; 
+        height: 50px; 
+    }
     
+    .obstacle-m { 
+        width: 45px; 
+        height: 60px; 
+    }
+    
+    .obstacle-l { 
+        width: 50px; 
+        height: 70px; 
+    }
+    
+    /* Obstacle2 variants for landscape */
     .obstacle.obstacle2 {
-        width: 75px;   
-        height: 50px;  
+        width: 75px;
+        height: 45px;
         bottom: -5px;
     }
     
-    .obstacle.obstacle2.obstacle-s { width: 70px; height: 45px; }
-    .obstacle.obstacle2.obstacle-m { width: 80px; height: 55px; }
-    .obstacle.obstacle2.obstacle-l { width: 90px; height: 65px; }
+    .obstacle.obstacle2.obstacle-s { 
+        width: 65px; 
+        height: 40px; 
+    }
     
-    /* Score adjustments for landscape */
+    .obstacle.obstacle2.obstacle-m { 
+        width: 80px; 
+        height: 50px; 
+    }
+    
+    .obstacle.obstacle2.obstacle-l { 
+        width: 90px; 
+        height: 55px; 
+    }
+    
+    /* Score display - Optimized for landscape */
     .score-card {
-        font-size: 18px;
-        margin: 8px;
-        gap: 12px;
+        font-size: var(--font-size-xl);
+        margin: var(--space-6) var(--space-10);
+        gap: var(--space-10);
+        justify-content: space-between;
+        flex-wrap: nowrap;
     }
     
     .score-card span {
-        margin-right: 15px;
-        padding: 4px 8px;
-        font-size: 16px;
+        margin-right: 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        font-weight: var(--font-weight-bold);
+        padding: var(--space-4) var(--space-8);
+        background: rgba(var(--color-brown-600-rgb), 0.15);
+        border-radius: var(--radius-sm);
+        backdrop-filter: blur(5px);
+        white-space: nowrap;
+        flex: 1;
+        text-align: center;
+        font-size: var(--font-size-base);
+    }
+    
+    /* Restart modal for landscape */
+    .restart-game {
+        min-width: 240px;
+        min-height: 140px;
+        font-size: var(--font-size-xl);
+        padding: var(--space-20) var(--space-16);
+        border-radius: var(--radius-lg);
+    }
+    
+    .restart-game .content {
+        gap: var(--space-16);
+    }
+    
+    .restart-game .text {
+        font-size: var(--font-size-base);
+    }
+    
+    .restart-game .btn-reset-game,
+    .restart-game .btn-main-menu-game {
+        width: 50px;
+        height: 50px;
+        border-radius: var(--radius-base);
+        font-size: var(--font-size-xs);
+    }
+    
+    .restart-game .buttons {
+        gap: var(--space-12);
+    }
+    
+    /* Touch-friendly styles for mobile devices */
+    .game-container {
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+        touch-action: manipulation;
+    }
+    
+    /* Touch instruction for landscape mobile */
+    .game-container::before {
+        content: "TAP TO JUMP";
+        position: absolute;
+        top: var(--space-10);
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(var(--color-slate-900-rgb), 0.7);
+        color: var(--color-btn-primary-text);
+        padding: var(--space-6) var(--space-12);
+        border-radius: var(--radius-full);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-bold);
+        z-index: 10;
+        animation: fadeInOut 3s ease-in-out;
+    }
+    
+    .game-container.stop::before {
+        display: none;
     }
 }
 
@@ -857,18 +1604,17 @@ button:hover {
    RESPONSIVE DESIGN - VERY SHORT LANDSCAPE
    ========================= */
 /* Very short landscape screens */
-@media (max-height: 400px) and (orientation: landscape) {
+@media (max-width: 1023px) and (max-height: 400px) and (orientation: landscape) {
     .game-body {
-        padding: 5px 10px;
+        padding: var(--space-2) var(--space-8);
     }
     
     .game-container {
         height: calc(100vh - 60px);
-        min-height: 180px;
+        min-height: 160px;
         max-height: 220px;
     }
     
-    /* Smaller elements for very constrained height */
     .player {
         width: 55px;
         height: 65px;
@@ -883,109 +1629,175 @@ button:hover {
     }
     
     .obstacle {
-        width: 35px;
-        height: 45px;
+        width: 32px;
+        height: 42px;
         bottom: -5px;
     }
     
-    .obstacle-s { width: 30px; height: 40px; }
-    .obstacle-m { width: 38px; height: 48px; }
-    .obstacle-l { width: 42px; height: 55px; }
+    .obstacle-s { width: 28px; height: 38px; }
+    .obstacle-m { width: 35px; height: 45px; }
+    .obstacle-l { width: 40px; height: 52px; }
     
     .obstacle.obstacle2 {
-        width: 60px;
-        height: 35px;
+        width: 55px;
+        height: 32px;
         bottom: -3px;
     }
     
     .score-card {
-        font-size: 14px;
-        margin: 5px;
-        gap: 8px;
+        font-size: var(--font-size-base);
+        margin: var(--space-2) var(--space-8);
+        gap: var(--space-6);
     }
     
     .score-card span {
-        padding: 2px 6px;
-        font-size: 14px;
-        margin-right: 10px;
+        padding: var(--space-2) var(--space-6);
+        font-size: var(--font-size-sm);
     }
 }
 
 /* =========================
    RESPONSIVE DESIGN - TABLET
    ========================= */
-/* Tablet Styles (min-width: 768px) */
-@media (min-width: 768px) {
-    /* Tablet game container */
+@media (min-width: 768px) and (max-width: 1023px) {
     .game-container {
         width: 100%;
         height: 350px;
         max-width: 800px;
-        margin: 20px auto;
-        border: 2px solid;
+        margin: var(--space-20) auto;
+        border: 2px solid var(--color-border);
     }
     
-    /* Tablet player size */
     .player {
-        width: 60px;
-        height: 70px;
+        width: 70px;
+        height: 85px;
     }
     
-    /* Tablet jump height */
     @keyframes jump {
         0% { bottom: 0; }
-        25% { bottom: 150px; }
-        50% { bottom: 150px; }
+        25% { bottom: 140px; }
+        50% { bottom: 140px; }
         100% { bottom: 0; }
     }
     
-    /* Tablet obstacle sizes */
     .obstacle {
-        width: 40px;
-        height: 50px;
+        width: 45px;
+        height: 60px;
     }
     
-    .obstacle-s { width: 45px; height: 55px; }
+    .obstacle-s { width: 40px; height: 55px; }
     .obstacle-m { width: 50px; height: 65px; }
-    .obstacle-l { width: 60px; height: 75px; }
+    .obstacle-l { width: 55px; height: 75px; }
     
     .obstacle.obstacle2 {
-        width: 65px;
+        width: 85px;
         height: 55px;
     }
     
-    .obstacle.obstacle2.obstacle-s { width: 70px; height: 60px; }
-    .obstacle.obstacle2.obstacle-m { width: 75px; height: 70px; }
-    .obstacle.obstacle2.obstacle-l { width: 85px; height: 80px; }
+    .obstacle.obstacle2.obstacle-s { width: 75px; height: 50px; }
+    .obstacle.obstacle2.obstacle-m { width: 90px; height: 60px; }
+    .obstacle.obstacle2.obstacle-l { width: 100px; height: 70px; }
     
-    /* Tablet score display */
     .score-card {
-        font-size: 22px;
-        margin: 15px;
+        font-size: var(--font-size-2xl);
+        margin: var(--space-16);
     }
 }
 
 /* =========================
    RESPONSIVE DESIGN - DESKTOP
    ========================= */
-/* Desktop Styles (min-width: 1024px) */
 @media (min-width: 1024px) {
-    /* Desktop game container */
+    .game-container {
+        width: 1000px;
+        height: 400px;
+        max-width: none;
+        max-height: none;
+        margin: var(--space-20) auto;
+    }
+    
+    .player {
+        width: 80px;
+        height: 95px;
+    }
+    
+    @keyframes jump {
+        0% { bottom: 0; }
+        25% { bottom: 160px; }
+        50% { bottom: 160px; }
+        100% { bottom: 0; }
+    }
+    
+    .obstacle {
+        width: 50px;
+        height: 70px;
+    }
+    
+    .obstacle-s { width: 55px; height: 75px; }
+    .obstacle-m { width: 65px; height: 85px; }
+    .obstacle-l { width: 75px; height: 95px; }
+    
+    .obstacle.obstacle2 {
+        width: 90px;
+        height: 75px;
+    }
+    
+    .obstacle.obstacle2.obstacle-s { width: 85px; height: 70px; }
+    .obstacle.obstacle2.obstacle-m { width: 95px; height: 80px; }
+    .obstacle.obstacle2.obstacle-l { width: 105px; height: 90px; }
+    
+    .score-card {
+        font-size: var(--font-size-3xl);
+        margin: var(--space-20);
+    }
+    
+    .score-card span {
+        margin-right: var(--space-20);
+    }
+    
+    .restart-game {
+        min-width: 300px;
+        min-height: 180px;
+        font-size: var(--font-size-4xl);
+        padding: var(--space-32) var(--space-24);
+        border-radius: var(--radius-lg);
+    }
+    
+    .restart-game .content {
+        gap: var(--space-24);
+    }
+    
+    .restart-game .text {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .restart-game .btn-reset-game,
+    .restart-game .btn-main-menu-game {
+        width: 65px;
+        height: 65px;
+        border-radius: var(--radius-lg);
+        font-size: var(--font-size-sm);
+    }
+    
+    .restart-game .buttons {
+        gap: var(--space-20);
+    }
+}
+
+/* =========================
+   LARGE DESKTOP OPTIMIZATION
+   ========================= */
+@media (min-width: 1200px) {
     .game-container {
         width: 1200px;
         height: 450px;
-        max-width: none;
-        max-height: none;
-        margin: 20px auto;
     }
     
-    /* Desktop player size */
     .player {
         width: 90px;
         height: 105px;
     }
     
-    /* Desktop jump height */
     @keyframes jump {
         0% { bottom: 0; }
         25% { bottom: 180px; }
@@ -993,10 +1805,9 @@ button:hover {
         100% { bottom: 0; }
     }
     
-    /* Desktop obstacle sizes */
     .obstacle {
-        width: 50px;
-        height: 70px;
+        width: 55px;
+        height: 75px;
     }
     
     .obstacle-s { width: 60px; height: 80px; }
@@ -1004,50 +1815,27 @@ button:hover {
     .obstacle-l { width: 80px; height: 100px; }
     
     .obstacle.obstacle2 {
-        width: 90px;
-        height: 75px;
+        width: 95px;
+        height: 80px;
     }
     
-    .obstacle.obstacle2.obstacle-s { width: 95px; height: 80px; }
-    .obstacle.obstacle2.obstacle-m { width: 105px; height: 90px; }
-    .obstacle.obstacle2.obstacle-l { width: 115px; height: 100px; }
-    
-    /* Desktop score display */
     .score-card {
-        font-size: 30px;
-        margin: 20px;
+        font-size: var(--font-size-4xl);
+        margin: var(--space-24);
     }
     
-    .score-card span {
-        margin-right: 20px;
-    }
-    
-    /* Desktop restart modal */
     .restart-game {
         min-width: 320px;
         min-height: 200px;
-        font-size: 28px;
-        padding: 38px 30px;
-        border-radius: 20px;
-    }
-    
-    .restart-game .content {
-        gap: 24px;
-    }
-    
-    .restart-game .text {
-        font-size: 24px;
+        font-size: var(--font-size-4xl);
+        padding: var(--space-32);
     }
     
     .restart-game .btn-reset-game,
     .restart-game .btn-main-menu-game {
         width: 70px;
         height: 70px;
-        border-radius: 14px;
-        font-size: 14px;
-    }
-    
-    .restart-game .buttons {
-        gap: 20px;
+        font-size: var(--font-size-base);
     }
 }
+```

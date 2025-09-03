@@ -24,8 +24,8 @@ async function verifyToken(token) {
     if (!token) return false;
     
     try {
-        const response = await fetch(`${BACKEND_URL}/api/userscore`, {
-            method: 'GET',
+        const response = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+            method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -37,6 +37,7 @@ async function verifyToken(token) {
         return false;
     }
 }
+
 
 
 function clearAuthToken() {
