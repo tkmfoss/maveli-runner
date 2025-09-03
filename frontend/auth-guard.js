@@ -17,7 +17,7 @@ function isPublicOnlyPage(pageName = getCurrentPageName()) {
 }
 
 function getAuthToken() {
-    return sessionStorage.getItem('authToken');
+    return localStorage.getItem('authToken');
 }
 
 async function verifyToken(token) {
@@ -40,7 +40,7 @@ async function verifyToken(token) {
 
 
 function clearAuthToken() {
-    sessionStorage.removeItem('authToken');
+    localStorage.removeItem('authToken');
 }
 
 function redirectToLogin() {

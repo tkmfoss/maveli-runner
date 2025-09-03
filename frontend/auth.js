@@ -87,7 +87,7 @@ async function login(email, password) {
     }
 
     if (data.token) {
-        sessionStorage.setItem("authToken", data.token);
+        localStorage.setItem("authToken", data.token);
     }
 
     return data;
