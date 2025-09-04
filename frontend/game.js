@@ -252,7 +252,7 @@ async function initializeGameElements() {
             obstacleElement.style.left = '100%';
         }
         
-        setScore(3000);
+        setScore(0);
         setTimeout(resolve, 200); 
     });
 }
