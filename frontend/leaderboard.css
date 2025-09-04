@@ -28,7 +28,16 @@ h1 {
     font-size: 36px;
     font-weight: bold;
     letter-spacing: 2px;
+    align-items: center;
 }
+
+h1, .button-container {
+
+  text-align: center; 
+}
+
+
+
 
 /* Leaderboard Table */
 table {
@@ -69,7 +78,7 @@ tbody tr:hover {
 /* ========================= BACK & LOGOUT BUTTONS ========================= */
 .back-button,
 .logout-button {
-  padding: 12px 30px;
+  padding: 15px ;
   font-size: 18px;
   background: #3cb371;
   color: white;
@@ -94,6 +103,7 @@ tbody tr:hover {
     flex-direction: column;
     gap: 15px;
     align-items: stretch;
+    text-align: center;
   }
   .back-button,
   .logout-button {

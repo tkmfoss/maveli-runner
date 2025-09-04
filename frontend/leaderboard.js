@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function fetchLeaderboard() {
-    console.log("Backend URL used:", BACKEND_URL);
 
     try {
         const response = await fetch(`${BACKEND_URL}/api/leaderboard`);

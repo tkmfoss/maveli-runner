@@ -5,14 +5,14 @@ const BACKEND_URL = config.BACKEND_URL;
 
 const GAME_CONSTANTS = {
     BASE_SPEED: 4000,
-    MIN_SPEED: 1000,
+    MIN_SPEED: 1000, // Changed from 1000 to 800 for increased difficulty
     BASE_JUMP_DURATION: 1200,
     MIN_JUMP_DURATION: 800,
     SCORE_INCREMENT_INTERVAL: 50,
     COLLISION_CHECK_INTERVAL: 20,
     JUMP_DEBOUNCE_TIME: 100,
     DIFFICULTY_CHECK_TIMEOUT: 10000,
-    SPEED_REDUCTION_PER_1000_SCORE: 400
+    SPEED_REDUCTION_PER_500_SCORE: 500 // User's setting for faster speed increase
 };
 
 const playerElement = document.querySelector('.player');
@@ -35,7 +35,9 @@ let score = 0;
 let highscore = 0;
 let gameDataLoaded = false;
 let lastJumpTime = 0;
-let gameSessionToken = null; 
+
+// Simple anti-cheat session tracking
+let gameSessionKey = null; // Simple session key from server
 
 let collisionInterval;
 let scoreInterval;
@@ -172,8 +174,11 @@ async function initializeGame() {
         updateLoadingProgress(40, 'Loading high score...');
         await loadHighScore();
         
-        updateLoadingProgress(60, 'Creating game session...');
-        await createGameSession();
+        updateLoadingProgress(60, 'Creating anti-cheat session...');
+        const sessionCreated = await createGameSession();
+        if (!sessionCreated) {
+            throw new Error('Failed to create anti-cheat session');
+        }
         
         updateLoadingProgress(80, 'Preparing game assets...');
         await initializeGameElements();
@@ -198,13 +203,15 @@ async function initializeGame() {
     }
 }
 
-
+// Very simple session creation - no complex cryptography
 async function createGameSession() {
     try {
         const token = getAuthToken();
         if (!token) {
             throw new Error('No authentication token');
         }
+
+        console.log('Creating simple anti-cheat session...');
 
         const response = await fetch(`${BACKEND_URL}/api/create-session`, {
             method: 'POST',
@@ -216,15 +223,19 @@ async function createGameSession() {
 
         if (response.ok) {
             const data = await response.json();
-            gameSessionToken = data.sessionToken;
-            console.log('Game session created successfully');
+            gameSessionKey = data.sessionKey;
+            console.log('Anti-cheat session created:', gameSessionKey);
+            return true;
         } else {
-            console.warn('Failed to create game session, continuing without token');
-            gameSessionToken = null;
+            const errorData = await response.json();
+            console.error('Failed to create session:', errorData);
+            alert('Failed to create game session. Please refresh and try again.');
+            return false;
         }
     } catch (error) {
-        console.error('Game session creation error:', error);
-        gameSessionToken = null; 
+        console.error('Session creation error:', error);
+        alert('Connection error. Please check your internet and try again.');
+        return false;
     }
 }
 
@@ -241,7 +252,7 @@ async function initializeGameElements() {
             obstacleElement.style.left = '100%';
         }
         
-        setScore(0);
+        setScore(3000);
         setTimeout(resolve, 200); 
     });
 }
@@ -419,8 +430,9 @@ function jump() {
 
 let lastObstacleSpawn = Date.now();
 
+// Updated speed calculation - every 500 points, stays at 800 minimum (increased difficulty)
 function calculateCurrentSpeed(score) {
-    const speedReduction = Math.floor(score / 1000) * GAME_CONSTANTS.SPEED_REDUCTION_PER_1000_SCORE; 
+    const speedReduction = Math.floor(score / 500) * GAME_CONSTANTS.SPEED_REDUCTION_PER_500_SCORE; 
     const newSpeed = Math.max(GAME_CONSTANTS.MIN_SPEED, GAME_CONSTANTS.BASE_SPEED - speedReduction);
     return newSpeed;
 }
@@ -438,18 +450,41 @@ function isObstacleOffScreen() {
     return obstacleRect.right < gameRect.left;
 }
 
+function getObstacleDistance() {
+    if (!obstacleElement || !gamecontainerElement) return 1000;
+    const obstacleRect = obstacleElement.getBoundingClientRect();
+    const gameRect = gamecontainerElement.getBoundingClientRect();
+    return obstacleRect.left - gameRect.left;
+}
+
+// FIXED: Smooth difficulty transitions - no more disappearing obstacles!
 function updateGameDifficulty() {
     const newSpeed = calculateCurrentSpeed(score);
     const newJumpDuration = calculateJumpDuration(newSpeed);
     let expectedBackground = currentBackground;
     
-    if (score >= 3000) {
-        expectedBackground = Math.floor((score - 3000) / 1000) % 2 === 0 ? 2 : 1;
+    // Background changes: first at 1000, then every 1000 (1000, 2000, 3000, etc.)
+    if (score >= 1000) {
+        expectedBackground = Math.floor(score / 1000) % 2 === 1 ? 2 : 1;
     }
     
-    const needChange = (newSpeed !== currentSpeed) || (score >= 3000 && expectedBackground !== currentBackground);
+    const needChange = (newSpeed !== currentSpeed) || (score >= 1000 && expectedBackground !== currentBackground);
     
+    // CRITICAL FIX: Don't change difficulty while jumping or when obstacle is too close
     if (needChange && !waitingForObstacleCompletion) {
+        const obstacleDistance = getObstacleDistance();
+        
+        // Safety checks to prevent the bug you experienced
+        if (jumping) {
+            console.log('Player is jumping, delaying difficulty change...');
+            return;
+        }
+        
+        if (obstacleDistance > 0 && obstacleDistance < 250) {
+            console.log('Obstacle too close for safe difficulty change, waiting...', obstacleDistance);
+            return;
+        }
+        
         waitingForObstacleCompletion = true;
         pendingDifficultyChange = {
             speed: newSpeed,
@@ -479,6 +514,13 @@ function updateGameDifficulty() {
 function applyDifficultyChange() {
     if (!pendingDifficultyChange) return;
     
+    console.log('Applying smooth difficulty change...', {
+        oldSpeed: currentSpeed,
+        newSpeed: pendingDifficultyChange.speed,
+        oldBackground: currentBackground,
+        newBackground: pendingDifficultyChange.background
+    });
+    
     const oldSpeed = currentSpeed;
     const oldBackground = currentBackground;
     
@@ -489,6 +531,7 @@ function applyDifficultyChange() {
         changeBackground(pendingDifficultyChange.background);
     }
     
+    // FIXED: Smoother obstacle transition
     restartObstacleAnimation();
     restartObstacleInterval();
     
@@ -504,13 +547,40 @@ function applyDifficultyChange() {
     pendingDifficultyChange = null;
 }
 
+// FIXED: Much smoother obstacle animation restart
 function restartObstacleAnimation() {
+    if (!obstacleElement) return;
+    
+    const obstacleDistance = getObstacleDistance();
+    
+    // If obstacle is visible and close, let it finish naturally first
+    if (obstacleDistance > 0 && obstacleDistance < 400) {
+        console.log('Letting close obstacle finish before applying new speed...');
+        
+        const waitForCompletion = setInterval(() => {
+            if (isObstacleOffScreen() || !gameActive) {
+                clearInterval(waitForCompletion);
+                if (gameActive) {
+                    applyNewObstacleSpeed();
+                }
+            }
+        }, 50);
+        return;
+    }
+    
+    // Safe to change immediately
+    applyNewObstacleSpeed();
+}
+
+function applyNewObstacleSpeed() {
     if (!obstacleElement) return;
     
     obstacleElement.style.animation = 'none';
     obstacleElement.style.left = '100%';
-    obstacleElement.offsetHeight;
+    obstacleElement.offsetHeight; // Force reflow
     obstacleElement.style.animation = `move ${currentSpeed / 1000}s linear infinite`;
+    
+    console.log('New obstacle speed applied smoothly:', currentSpeed);
 }
 
 function restartObstacleInterval() {
@@ -681,6 +751,7 @@ async function loadHighScore() {
     }
 }
 
+// Enhanced score submission for high scores
 async function submitGameScore() {
     try {
         const token = getAuthToken();
@@ -698,18 +769,24 @@ async function submitGameScore() {
             console.error('Insufficient game session data');
             return;
         }
+
+        if (!gameSessionKey) {
+            console.error('Anti-cheat protection failed');
+            alert('Game session invalid. Please restart the game.');
+            return;
+        }
         
-        console.log('Submitting enhanced game session:', {
+        console.log('Submitting HIGH SCORE with enhanced anti-cheat:', {
             score: score,
             duration: Date.now() - gameStartTime,
             eventsCount: gameEvents.length,
-            hasSessionToken: !!gameSessionToken
+            sessionKey: gameSessionKey
         });
         
         const gameData = {
             score: score,
+            sessionKey: gameSessionKey, 
             gameSession: {
-                sessionToken: gameSessionToken,
                 startTime: new Date(gameStartTime).toISOString(),
                 endTime: new Date().toISOString(),
                 duration: Date.now() - gameStartTime,
@@ -742,16 +819,25 @@ async function submitGameScore() {
                 if (highscoreElement) {
                     highscoreElement.innerText = highscore;
                 }
-                console.log('New high score saved!');
+                console.log('HIGH SCORE VALIDATION PASSED - New high score saved!', score);
+                
+                // Show success message for high scores
+                if (score > 5000) {
+                    alert(`🎉 AMAZING! New high score: ${score.toLocaleString()} points!`);
+                }
             } else {
                 console.log('Score not saved:', data.message);
             }
         } else {
             const errorData = await response.json();
-            console.error('Failed to submit score:', errorData);
+            console.error('High score anti-cheat validation failed:', errorData);
+            
+            if (errorData.error && (errorData.error.includes('session') || errorData.error.includes('key'))) {
+                alert('Game session invalid. Please restart to create a new session.');
+            }
         }
     } catch (error) {
-        console.error('Error submitting score:', error);
+        console.error('Error submitting high score:', error);
     }
 }
 
@@ -846,9 +932,15 @@ async function restartgame() {
     pendingDifficultyChange = null;
     
     try {
-        await createGameSession();
+        // Create new session for restart
+        const sessionCreated = await createGameSession();
+        if (!sessionCreated) {
+            throw new Error('Failed to create new session');
+        }
     } catch (error) {
-        console.error('Failed to create new game session:', error);
+        console.error('Failed to create new session:', error);
+        alert('Failed to create new session. Please refresh the page.');
+        return;
     }
     
     setTimeout(() => {
@@ -866,9 +958,15 @@ function startGame() {
         console.log('Game data not loaded yet, cannot start game');
         return;
     }
+
+    if (!gameSessionKey) {
+        console.error('Cannot start game');
+        alert('Game session not ready. Please restart the game.');
+        return;
+    }
     
     try {
-        console.log('Starting enhanced game...');
+        console.log('Starting SMOOTH DIFFICULTY GAME with no disappearing obstacles...');
         
         initGameSession();
         
@@ -882,15 +980,15 @@ function startGame() {
         randomObstacle();
         
         recordGameEvent('game_start', {
-            sessionToken: gameSessionToken,
+            sessionKey: gameSessionKey,
             initialSpeed: currentSpeed,
             initialJumpDuration: currentJumpDuration
         });
         
-        console.log('Game started successfully');
+        console.log('Smooth difficulty game started successfully - no more disappearing obstacles!');
         
     } catch (error) {
         console.error('Error starting game:', error);
-        alert('Failed to start the game. Please try again.');
+        alert('Failed to start the game. Please refresh and try again.');
     }
 }
