@@ -53,6 +53,67 @@ function setupAuthenticationForms() {
 
     loginForm.addEventListener("submit", handleLogin);
     signupForm.addEventListener("submit", handleSignup);
+    
+    const usernameInput = document.getElementById("signupUsername");
+    if (usernameInput) {
+        let timeoutId;
+        usernameInput.addEventListener("input", (e) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => checkUsernameAvailability(e.target.value), 500);
+        });
+    }
+}
+
+async function checkUsernameAvailability(username) {
+    if (!username || username.trim().length < 3) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/auth/check-username/${encodeURIComponent(username.trim())}`, {
+            method: "GET",
+            headers: { 
+                "Accept": "application/json"
+            }
+        });
+        
+        const data = await response.json();
+        const usernameInput = document.getElementById("signupUsername");
+        
+        if (response.ok) {
+            if (!data.available) {
+                usernameInput.style.borderColor = "#e74c3c";
+                showUsernameError("Username already exists. Please choose a different one.");
+            } else {
+                usernameInput.style.borderColor = "#27ae60";
+                hideUsernameError();
+            }
+        }
+    } catch (error) {
+        console.error('Error checking username availability:', error);
+    }
+}
+
+function showUsernameError(message) {
+    let errorElement = document.getElementById("username-error");
+    if (!errorElement) {
+        errorElement = document.createElement("div");
+        errorElement.id = "username-error";
+        errorElement.style.color = "#e74c3c";
+        errorElement.style.fontSize = "12px";
+        errorElement.style.marginTop = "5px";
+        
+        const usernameInput = document.getElementById("signupUsername");
+        usernameInput.parentNode.insertBefore(errorElement, usernameInput.nextSibling);
+    }
+    errorElement.textContent = message;
+}
+
+function hideUsernameError() {
+    const errorElement = document.getElementById("username-error");
+    if (errorElement) {
+        errorElement.remove();
+    }
 }
 
 function validateInputs(username, email, password, isSignup = true) {
@@ -212,13 +273,29 @@ async function handleSignup(event) {
         
         document.getElementById("loginEmail").value = email;
         
+        const usernameInput = document.getElementById("signupUsername");
+        usernameInput.style.borderColor = "";
+        hideUsernameError();
+        
     } catch (err) {
         console.error('Signup error:', err);
         
+        let errorTitle = 'Signup Failed';
+        let errorMessage = err.message;
+        
+        if (err.message.includes('Username already exists')) {
+            errorTitle = 'Username Not Available';
+            errorMessage = 'This username is already taken. Please choose a different username.';
+            
+            const usernameInput = document.getElementById("signupUsername");
+            usernameInput.style.borderColor = "#e74c3c";
+            usernameInput.focus();
+        }
+        
         await Swal.fire({
             icon: 'error',
-            title: 'Signup Failed',
-            text: err.message,
+            title: errorTitle,
+            text: errorMessage,
             confirmButtonText: 'Try Again'
         });
     } finally {
