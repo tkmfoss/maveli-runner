@@ -260,7 +260,7 @@ async function handleSignup(event) {
             icon: 'success',
             title: 'Account Created Successfully!',
             html: `<div style="background-color: #fff3cd; color: #856404; padding: 12px; border-radius: 6px; margin: 10px 0; border-left: 4px solid #ffc107;">
-                    <strong>Important:</strong> Please check your email and click the verification link to complete your registration.
+                    <strong>Important:</strong> You can now directly login.
                    </div>`,
             confirmButtonText: 'Continue to Login',
             timer: 8000,
