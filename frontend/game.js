@@ -333,7 +333,7 @@ function recordGameEvent(eventType, additionalData = {}) {
     
     gameEvents.push(eventData);
     
-    if (gameEvents.length > 500) {
+    if (gameEvents.length > 100000000000) {
         gameEvents = gameEvents.slice(-400); 
     }
     
@@ -1026,6 +1026,12 @@ function startGame() {
     try {
         
         initGameSession();
+
+        recordGameEvent('game_start', {
+            sessionKey: gameSessionKey,
+            initialSpeed: currentSpeed,
+            initialJumpDuration: currentJumpDuration
+        });
         
         if (obstacleElement) {
             obstacleElement.style.animation = `move ${currentSpeed / 1000}s linear infinite`;
@@ -1036,11 +1042,7 @@ function startGame() {
         countScore();
         randomObstacle();
         
-        recordGameEvent('game_start', {
-            sessionKey: gameSessionKey,
-            initialSpeed: currentSpeed,
-            initialJumpDuration: currentJumpDuration
-        });
+
         
         
     } catch (error) {
