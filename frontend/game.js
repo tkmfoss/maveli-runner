@@ -1,9 +1,7 @@
 import{ initializeAuthGuard, getAuthToken } from './auth-guard.js';
 import { config } from "./config.js";
 
-
 const BACKEND_URL = config.BACKEND_URL;
-
 
 const GAME_CONSTANTS = {
     BASE_SPEED: 4000,
@@ -17,7 +15,6 @@ const GAME_CONSTANTS = {
     SPEED_REDUCTION_PER_500_SCORE: 500 
 };
 
-
 const playerElement = document.querySelector('.player');
 const obstacleElement = document.querySelector('.obstacle');
 const scoreElement = document.querySelector('.score-card .score');
@@ -29,7 +26,6 @@ const progressBar = document.getElementById('progressBar');
 const loadingText = document.getElementById('loadingText');
 const gameContainer = document.getElementById('gameContainer');
 
-
 const OBSTACLE_SIZE = ['s','m','l'];
 let jumping = false;
 let gameActive = false;
@@ -40,16 +36,12 @@ let highscore = 0;
 let gameDataLoaded = false;
 let lastJumpTime = 0;
 
-
-
 let gameSessionKey = null; 
-
 
 let collisionInterval;
 let scoreInterval;
 let changeObstacleInterval;
 let pendingTimeoutId = null;
-
 
 let currentSpeed = GAME_CONSTANTS.BASE_SPEED; 
 let currentJumpDuration = GAME_CONSTANTS.BASE_JUMP_DURATION; 
@@ -57,7 +49,6 @@ let currentBackground = 1;
 let isBackground2 = false;
 let waitingForObstacleCompletion = false;
 let pendingDifficultyChange = null;
-
 
 function enforceOrientation() {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
@@ -68,7 +59,6 @@ function enforceOrientation() {
         hideOrientationMessage();
     }
 }
-
 
 function showOrientationMessage() {
     let orientationMessage = document.getElementById('orientationMessage');
@@ -93,7 +83,6 @@ function showOrientationMessage() {
     }
 }
 
-
 function hideOrientationMessage() {
     const orientationMessage = document.getElementById('orientationMessage');
     if (orientationMessage) {
@@ -102,7 +91,6 @@ function hideOrientationMessage() {
     
     resumeGame();
 }
-
 
 function pauseGame() {
     if (!gameActive) return;
@@ -114,7 +102,6 @@ function pauseGame() {
     if (collisionInterval) clearInterval(collisionInterval);
     if (scoreInterval) clearInterval(scoreInterval);
 }
-
 
 function resumeGame() {
     if (!gameActive) return;
@@ -129,12 +116,10 @@ function resumeGame() {
     }
 }
 
-
 window.addEventListener('orientationchange', () => {
     setTimeout(enforceOrientation, 100);
 });
 window.addEventListener('resize', enforceOrientation);
-
 
 function updateLoadingProgress(progress, text) {
     if (progressBar) {
@@ -145,7 +130,6 @@ function updateLoadingProgress(progress, text) {
     }
 }
 
-
 function showLoadingScreen() {
     if (loadingScreen) {
         loadingScreen.classList.remove('fade-out');
@@ -155,7 +139,6 @@ function showLoadingScreen() {
         gameContainer.classList.remove('ready');
     }
 }
-
 
 function hideLoadingScreen() {
     if (loadingScreen) {
@@ -174,7 +157,6 @@ function hideLoadingScreen() {
     }
 }
 
-
 async function initializeGame() {
     try {
         showLoadingScreen();
@@ -192,9 +174,19 @@ async function initializeGame() {
         await loadHighScore();
         
         updateLoadingProgress(60, 'Creating anti-cheat session...');
-        const sessionCreated = await createGameSession();
+        let sessionCreated = false;
+        let retries = 3;
+        while (retries > 0 && !sessionCreated) {
+            sessionCreated = await createGameSession();
+            if (!sessionCreated) {
+                retries--;
+                console.warn(`Session creation failed, retries left: ${retries}`);
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second before retry
+            }
+        }
+        
         if (!sessionCreated) {
-            throw new Error('Failed to create anti-cheat session');
+            throw new Error('Failed to create anti-cheat session after retries');
         }
         
         updateLoadingProgress(80, 'Preparing game assets...');
@@ -211,6 +203,7 @@ async function initializeGame() {
         }, 500);
         
     } catch (error) {
+        console.error('Game initialization error:', error);
         updateLoadingProgress(100, 'Error loading game');
         
         setTimeout(() => {
@@ -219,15 +212,15 @@ async function initializeGame() {
     }
 }
 
-
 async function createGameSession() {
     try {
         const token = getAuthToken();
         if (!token) {
+            console.error('No authentication token available');
             throw new Error('No authentication token');
         }
 
-
+        console.log('Creating game session with token:', token.substring(0, 20) + '...'); // Log partial token for security
         const response = await fetch(`${BACKEND_URL}/api/create-session`, {
             method: 'POST',
             headers: {
@@ -236,9 +229,9 @@ async function createGameSession() {
             }
         });
 
-
         if (response.ok) {
             const data = await response.json();
+            console.log('Session created successfully:', { sessionKey: data.sessionKey });
             gameSessionKey = data.sessionKey;
             return true;
         } else {
@@ -253,7 +246,6 @@ async function createGameSession() {
         return false;
     }
 }
-
 
 async function initializeGameElements() {
     return new Promise((resolve) => {
@@ -273,7 +265,6 @@ async function initializeGameElements() {
     });
 }
 
-
 function setupEventListeners() {
     const resetBtn = document.getElementById("btn-reset");
     const menuBtn = document.getElementById("btn-main-menu");
@@ -287,11 +278,9 @@ function setupEventListeners() {
     }
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
     initializeGame();
 });
-
 
 function initGameSession() {
     gameStartTime = Date.now();
@@ -311,7 +300,6 @@ function initGameSession() {
         pendingTimeoutId = null;
     }
 }
-
 
 function recordGameEvent(eventType, additionalData = {}) {
     if (!gameActive && eventType !== 'collision' && eventType !== 'game_over') return;
@@ -339,7 +327,6 @@ function recordGameEvent(eventType, additionalData = {}) {
     
 }
 
-
 function jumpListener() {
     document.removeEventListener('keydown', handleKeyDown);
     document.removeEventListener('touchstart', handleTouchStart);
@@ -350,14 +337,12 @@ function jumpListener() {
     document.addEventListener('click', handleClick);
 }
 
-
 function handleKeyDown(event) {
     if(event.key === ' '|| event.key === 'ArrowUp') {
         event.preventDefault();
         jump();
     }
 }
-
 
 function handleTouchStart(event) {
     if (!gameActive) return;
@@ -389,7 +374,6 @@ function handleTouchStart(event) {
     event.preventDefault();
     jump();
 }
-
 
 function handleClick(event) {
     if (!gameActive) return;
@@ -423,7 +407,6 @@ function handleClick(event) {
     jump();
 }
 
-
 function jump() {
     if(jumping || !gameActive) {
         return;
@@ -452,9 +435,7 @@ function jump() {
     }, currentJumpDuration);
 }
 
-
 let lastObstacleSpawn = Date.now();
-
 
 function calculateCurrentSpeed(score) {
     const speedReduction = Math.floor(score / 500) * GAME_CONSTANTS.SPEED_REDUCTION_PER_500_SCORE; 
@@ -462,13 +443,11 @@ function calculateCurrentSpeed(score) {
     return newSpeed;
 }
 
-
 function calculateJumpDuration(speed) {
     const speedRatio = speed / GAME_CONSTANTS.BASE_SPEED;
     const newJumpDuration = Math.max(GAME_CONSTANTS.MIN_JUMP_DURATION, GAME_CONSTANTS.BASE_JUMP_DURATION * speedRatio);
     return Math.round(newJumpDuration);
 }
-
 
 function isObstacleOffScreen() {
     if (!obstacleElement || !gamecontainerElement) return true;
@@ -476,7 +455,6 @@ function isObstacleOffScreen() {
     const gameRect = gamecontainerElement.getBoundingClientRect();
     return obstacleRect.right < gameRect.left;
 }
-
 
 function getObstacleDistance() {
     if (!obstacleElement || !gamecontainerElement) return 1000;
@@ -533,7 +511,6 @@ function updateGameDifficulty() {
     }
 }
 
-
 function applyDifficultyChange() {
     if (!pendingDifficultyChange) return;
     
@@ -569,7 +546,6 @@ function applyDifficultyChange() {
     pendingDifficultyChange = null;
 }
 
-
 function restartObstacleAnimation() {
     if (!obstacleElement) return;
     
@@ -591,7 +567,6 @@ function restartObstacleAnimation() {
     applyNewObstacleSpeed();
 }
 
-
 function applyNewObstacleSpeed() {
     if (!obstacleElement) return;
     
@@ -601,7 +576,6 @@ function applyNewObstacleSpeed() {
     obstacleElement.style.animation = `move ${currentSpeed / 1000}s linear infinite`;
     
 }
-
 
 function restartObstacleInterval() {
     if (changeObstacleInterval) {
@@ -627,7 +601,6 @@ function restartObstacleInterval() {
     }, currentSpeed);
 }
 
-
 function changeBackground(backgroundNumber) {
     currentBackground = backgroundNumber;
     const backgroundImage = backgroundNumber === 2 ? 'background2.webp' : 'background1.png';
@@ -645,7 +618,6 @@ function changeBackground(backgroundNumber) {
         obstacleElement.classList.remove('obstacle2');
     }
 }
-
 
 function checkGameIntegrity() {
     if (!gameActive) return;
@@ -701,7 +673,6 @@ function collisionDetection() {
     }, GAME_CONSTANTS.COLLISION_CHECK_INTERVAL);
 }
 
-
 function isCollision() {
     const playerRect = playerElement.getBoundingClientRect();
     const obstacleRect = obstacleElement.getBoundingClientRect();
@@ -735,7 +706,6 @@ function isCollision() {
     return playerPoints.some(point => isPointInPolygon(point, polygonPoints));
 }
 
-
 function isPointInPolygon(point, polygon) {
     let inside = false;
     
@@ -749,7 +719,6 @@ function isPointInPolygon(point, polygon) {
     return inside;
 }
 
-
 function setScore(newScore) {
     score = newScore;
     if (scoreElement) {
@@ -759,7 +728,6 @@ function setScore(newScore) {
         updateGameDifficulty();
     }
 }
-
 
 function countScore() {
     if (scoreInterval) {
@@ -771,7 +739,6 @@ function countScore() {
         setScore(score + 1);
     }, GAME_CONSTANTS.SCORE_INCREMENT_INTERVAL);
 }
-
 
 async function loadHighScore() {
     try {
@@ -814,31 +781,30 @@ async function loadHighScore() {
     }
 }
 
-
 async function submitGameScore() {
     try {
         const token = getAuthToken();
         if (!token) {
+            console.error('No authentication token');
             return;
         }
-        
+
         if (score <= highscore) {
             console.log('Score not higher than current high score');
             return;
         }
-        
+
         if (!gameStartTime || !gameEvents || gameEvents.length < 2) {
+            console.error('Invalid game data');
             return;
         }
 
-
         if (!gameSessionKey) {
-            console.error('Anti-cheat protection failed');
+            console.error('Anti-cheat protection failed: No session key');
             alert('Game session invalid. Please restart the game.');
             return;
         }
-        
-        
+
         const gameData = {
             score: score,
             sessionKey: gameSessionKey, 
@@ -858,7 +824,14 @@ async function submitGameScore() {
                 }
             }
         };
-        
+
+        console.log('Submitting score with data:', {
+            score,
+            sessionKey: gameSessionKey,
+            duration: gameData.gameSession.duration,
+            eventCount: gameData.gameSession.eventCount
+        });
+
         const response = await fetch(`${BACKEND_URL}/api/scoreupdate`, {
             method: 'POST',
             headers: {
@@ -893,7 +866,6 @@ async function submitGameScore() {
     }
 }
 
-
 function calculateAverageReactionTime() {
     const jumpEvents = gameEvents.filter(e => e.type === 'jump' && e.reactionTime);
     if (jumpEvents.length === 0) return 0;
@@ -902,12 +874,10 @@ function calculateAverageReactionTime() {
     return Math.round(totalReactionTime / jumpEvents.length);
 }
 
-
 function randomObstacleSize() {
     const index = Math.floor(Math.random() * OBSTACLE_SIZE.length);
     return OBSTACLE_SIZE[index];
 }
-
 
 function randomObstacle() {
     const obstacleSize = randomObstacleSize();
@@ -921,7 +891,6 @@ function randomObstacle() {
     lastObstacleSpawn = Date.now();
     restartObstacleInterval();
 }
-
 
 function stopGame() {
     gameActive = false;
@@ -949,7 +918,6 @@ function stopGame() {
     pendingTimeoutId = null;
     
 }
-
 
 async function restartgame() {
     showLoadingScreen();
@@ -1004,11 +972,9 @@ async function restartgame() {
     }, 800);
 }
 
-
 function mainmenu() {
     window.location.href = "mainmenu.html";
 }
-
 
 function startGame() {
     if (!gameDataLoaded) {
@@ -1016,14 +982,14 @@ function startGame() {
         return;
     }
 
-
     if (!gameSessionKey) {
-        console.error('Cannot start game');
+        console.error('Cannot start game: No session key');
         alert('Game session not ready. Please restart the game.');
         return;
     }
-    
+
     try {
+        console.log('Starting game with session key:', gameSessionKey);
         
         initGameSession();
 
@@ -1041,9 +1007,6 @@ function startGame() {
         collisionDetection();
         countScore();
         randomObstacle();
-        
-
-        
         
     } catch (error) {
         console.error('Error starting game:', error);
