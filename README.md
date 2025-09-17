@@ -20,20 +20,10 @@ This is the client for Maveli Runner—a browser-based endless runner themed aro
     cd maveli-runner/Maveli_Game_Client
     ```
 
-2. **Install dependencies** (if `package.json` exists, e.g. React):
-    ```
-    npm install
-    ```
-
-3. **Configure backend URL**  
+2. **Configure backend URL**  
     Edit `config.js`:
     ```
     BACKEND_URL=https://your-backend-url.com
-    ```
-
-4. **Run locally:**
-    ```
-    # open index.html if pure JS
     ```
 
 ## FRONTEND_FOLDER_STRUCTURE
